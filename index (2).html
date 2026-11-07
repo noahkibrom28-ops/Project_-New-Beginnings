@@ -1,0 +1,1001 @@
+<title>New Beginnings</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* Layout: Khan-style shell. Sticky header with an Explore mega menu (subject column, then language column), course pages with unit cards, unit pages with a left outline and video/practice/quiz/guide/wellbeing steps. */
+:root{
+  --bg:#ffffff; --surface:#f2f6f6; --ink:#12262b; --muted:#53686d; --line:#d9e3e4;
+  --brand:#0b3a40; --sun:#f2a53a; --blue:#1a5fd0; --on-blue:#ffffff;
+  --good:#1b7f4b; --good-bg:#e3f4ea; --bad:#b3341f; --bad-bg:#fbe9e5; --warn-bg:#fff4dd;
+  --font:'Be Vietnam Pro','Noto Sans SC','PingFang SC','Microsoft YaHei','Segoe UI',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d1a1d; --surface:#15272b; --ink:#e8f1f2; --muted:#9bb2b6; --line:#27403f;
+  --brand:#0b3a40; --sun:#f2b04f; --blue:#7fb0ff; --on-blue:#0d1a1d;
+  --good:#58cc8f; --good-bg:#12331f; --bad:#ff8f78; --bad-bg:#3a1b15; --warn-bg:#3a2f12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1a1d; --surface:#15272b; --ink:#e8f1f2; --muted:#9bb2b6; --line:#27403f;
+  --brand:#0b3a40; --sun:#f2b04f; --blue:#7fb0ff; --on-blue:#0d1a1d;
+  --good:#58cc8f; --good-bg:#12331f; --bad:#ff8f78; --bad-bg:#3a1b15; --warn-bg:#3a2f12; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.55;margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{line-height:1.2;text-wrap:balance;margin:0}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);
+  margin-left:calc(-1 * max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1 * max(16px,env(safe-area-inset-right,0px)));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;flex-wrap:wrap;padding-block:6px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.logo svg{width:34px;height:34px;flex:none}
+.explore{display:flex;align-items:center;gap:8px;border:0;background:none;font-weight:600;padding:8px 12px;border-radius:6px;margin-left:8px}
+.explore:hover,.explore[aria-expanded="true"]{background:var(--surface)}
+.explore svg{width:14px;height:14px;transition:transform .15s}
+.explore[aria-expanded="true"] svg{transform:rotate(180deg)}
+.spacer{flex:1}
+.link{background:none;border:0;padding:8px 10px;font-weight:600;color:var(--ink);text-decoration:none;border-radius:6px}
+.link:hover{background:var(--surface)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--blue);color:var(--on-blue);border:0;border-radius:6px;
+  padding:11px 20px;font-weight:600;text-decoration:none;min-height:44px}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--blue);box-shadow:inset 0 0 0 2px var(--blue)}
+.btn.small{padding:7px 14px;min-height:36px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed;filter:none}
+
+/* mega menu */
+#mega{position:absolute;left:0;right:0;top:100%;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 12px 24px rgba(0,0,0,.12);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#mega .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;padding-block:16px}
+.mega-col{padding:4px 16px;min-width:0}
+.mega-col+.mega-col{border-left:1px solid var(--line)}
+.mega-h{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:8px}
+.mega-item{display:flex;width:100%;justify-content:space-between;align-items:center;gap:8px;text-align:left;background:none;border:0;border-radius:6px;padding:10px 12px;font-weight:600}
+.mega-item:hover,.mega-item.on{background:var(--surface)}
+.mega-item.on{box-shadow:inset 3px 0 0 var(--sun)}
+.mega-lang{display:block;padding:10px 12px;border-radius:6px;text-decoration:none;color:var(--ink);font-weight:600}
+.mega-lang:hover{background:var(--surface)}
+.mega-lang small{display:block;color:var(--muted);font-weight:400;font-size:13px}
+
+/* home */
+.hero{background:var(--brand);color:#fff;margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:56px max(16px,env(safe-area-inset-left,0px)) 64px;position:relative;overflow:hidden}
+.hero .wrap{position:relative;z-index:1;display:grid;gap:18px;max-width:760px;margin:0 auto 0 max(0px,calc((100% - 1120px)/2))}
+.hero h1{font-size:clamp(32px,6vw,52px);letter-spacing:-.02em}
+.hero p{font-size:18px;max-width:60ch;color:#dcecee}
+.hero .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+.hero .btn{background:var(--sun);color:#1b1500}
+.hero .btn.ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px #fff}
+.sunrise{position:absolute;right:-60px;bottom:-110px;width:420px;max-width:70vw;opacity:.9}
+section.block{padding-block:44px}
+.block h2{font-size:26px;margin-bottom:6px}
+.block .sub{color:var(--muted);margin-bottom:22px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{border:1px solid var(--line);border-radius:10px;padding:20px;background:var(--bg);display:flex;flex-direction:column;gap:10px;min-width:0}
+.card h3{font-size:18px}
+.card .langs{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.chip{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--surface);color:var(--ink);text-decoration:none;font-size:14px;font-weight:600;border:1px solid var(--line)}
+.chip:hover{border-color:var(--blue);color:var(--blue)}
+.steps{list-style:none;padding:0;margin:0;display:grid;gap:0;counter-reset:s;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:12px;padding:16px 18px;align-items:start}
+.steps li+li{border-top:1px solid var(--line)}
+.steps li::before{content:counter(s);width:32px;height:32px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+.steps b{display:block}
+.steps span{color:var(--muted);font-size:15px}
+
+/* course + unit */
+.crumb{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px;color:var(--muted);padding-top:22px}
+.crumb a{color:var(--muted)}
+.page-h{padding-block:14px 18px;display:grid;gap:10px}
+.page-h h1{font-size:clamp(26px,4.5vw,38px);letter-spacing:-.01em}
+.tag{display:inline-block;width:max-content;font-size:13px;font-weight:600;color:var(--brand);background:var(--sun);padding:3px 10px;border-radius:999px}
+.about{background:var(--surface);border-radius:10px;padding:18px 20px;display:grid;gap:6px;max-width:80ch}
+.about h2{font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.unit-card{border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:8px;grid-template-columns:minmax(0,1fr) auto;align-items:center}
+.unit-card .u{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.unit-card h3{font-size:20px}
+.units{display:grid;gap:14px;padding-block:20px 8px;max-width:860px}
+.pill{font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--surface);color:var(--muted);border:1px solid var(--line)}
+.pill.live{background:var(--good-bg);color:var(--good);border-color:transparent}
+.note{background:var(--warn-bg);border-radius:8px;padding:12px 14px;font-size:14px;max-width:80ch}
+.cert{border:2px dashed var(--line);border-radius:10px;padding:16px 20px;max-width:860px;margin-block:18px 48px;color:var(--muted)}
+
+.unit-grid{display:grid;grid-template-columns:260px minmax(0,1fr);gap:32px;padding-block:8px 64px;align-items:start}
+.side{position:sticky;top:calc(76px + env(safe-area-inset-top,0px));display:grid;gap:14px;border:1px solid var(--line);border-radius:10px;padding:16px}
+.side h2{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.side button.nav{display:block;width:100%;text-align:left;background:none;border:0;padding:7px 8px;border-radius:6px;font-size:14.5px}
+.side button.nav:hover{background:var(--surface)}
+.bar{height:8px;border-radius:99px;background:var(--surface);overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--good)}
+.main{display:grid;gap:34px;min-width:0}
+.lesson h2{font-size:22px;margin-bottom:12px}
+.lesson .eyebrow{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px}
+.vids{display:grid;gap:14px}
+.vid{border:1px solid var(--line);border-radius:10px;display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:16px;padding:14px}
+.shot{aspect-ratio:16/9;max-width:100%;border-radius:8px;background:linear-gradient(135deg,#0b3a40,#1d6b73);display:grid;place-items:center;position:relative;color:#fff}
+.shot svg{width:44px;height:44px}
+.shot em{position:absolute;left:8px;top:8px;font-style:normal;font-size:11px;font-weight:600;background:rgba(0,0,0,.4);padding:2px 8px;border-radius:99px}
+.vid h3{font-size:17px;margin-bottom:4px}
+.meta{font-size:13.5px;color:var(--muted);display:grid;gap:2px;margin-bottom:10px}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tick{color:var(--good);font-weight:700;font-size:14px}
+.panel{border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:10px}
+.panel.hl{background:var(--surface)}
+.panel h2{font-size:21px}
+.guide h3{font-size:17px;margin:16px 0 4px}
+.guide p,.guide li{max-width:68ch}
+.guide ul{margin:6px 0 0;padding-left:20px}
+.done{background:var(--good-bg);color:var(--good);border-radius:10px;padding:14px 18px;font-weight:600}
+
+/* quiz */
+[hidden]{display:none!important}
+#quiz{position:fixed;inset:0;background:rgba(5,15,18,.6);z-index:50;display:grid;place-items:center;padding:16px}
+.qbox{background:var(--bg);border-radius:12px;max-width:640px;width:100%;max-height:92vh;overflow:auto;padding:22px;display:grid;gap:16px}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.qhead h2{font-size:17px}
+.dots{display:flex;gap:4px;flex-wrap:wrap}
+.dots i{width:18px;height:6px;border-radius:99px;background:var(--line)}
+.dots i.d{background:var(--good)} .dots i.x{background:var(--bad)} .dots i.c{background:var(--blue)}
+.qtext{font-size:19px;font-weight:600}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:8px;padding:12px 14px}
+.opt:hover{border-color:var(--blue)}
+.opt.sel{border-color:var(--blue);background:var(--surface)}
+.opt.ok{border-color:var(--good);background:var(--good-bg)}
+.opt.no{border-color:var(--bad);background:var(--bad-bg)}
+.fb{border-radius:8px;padding:12px 14px;font-size:15px}
+.fb.ok{background:var(--good-bg);color:var(--good)} .fb.no{background:var(--bad-bg);color:var(--bad)}
+.score{font-size:44px;font-weight:700}
+
+/* pronunciation demo */
+.pron{display:grid;gap:14px;justify-items:start}
+.word{font-size:46px;font-weight:700;letter-spacing:-.01em}
+.ipa{color:var(--muted);font-size:18px}
+.meter{display:flex;gap:3px;height:28px;align-items:flex-end}
+.meter i{width:6px;background:var(--blue);border-radius:2px;animation:m .5s infinite alternate}
+@keyframes m{from{height:4px}to{height:26px}}
+@media (prefers-reduced-motion:reduce){.meter i{animation:none;height:14px}}
+
+.word.sent{font-size:26px;line-height:1.3}
+.tipbox{background:var(--surface);border-radius:8px;padding:10px 14px;font-size:15px}
+main#app{max-width:1400px}
+.top .wrap{max-width:1400px}
+a.shot{text-decoration:none;color:#fff}
+.adgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+.homecol{min-width:0}
+.ad{border:1px dashed var(--line);background:var(--surface);color:var(--muted);display:grid;place-items:center;text-align:center;font-size:14px;font-weight:600;padding:12px;border-radius:6px}
+.ad small{display:block;font-size:11px;font-weight:400;margin-top:4px}
+.rail{display:none;position:sticky;top:calc(84px + env(safe-area-inset-top,0px));height:600px;align-self:start;margin-top:44px}
+.banner{height:90px;margin-block:8px 48px}
+@media (min-width:1180px){.adgrid{grid-template-columns:160px minmax(0,1fr) 160px}.rail{display:grid}}
+footer{border-top:1px solid var(--line);padding-block:28px 40px;color:var(--muted);font-size:14px}
+#login{position:absolute;right:max(16px,env(safe-area-inset-right,0px));top:100%;margin-top:8px;max-width:320px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:16px;box-shadow:0 12px 24px rgba(0,0,0,.15);font-size:14.5px;z-index:30}
+
+@media (max-width:820px){
+  .unit-grid{grid-template-columns:1fr}
+  .side{position:static}
+  #mega .wrap{grid-template-columns:1fr}
+  .mega-col+.mega-col{border-left:0;border-top:1px solid var(--line);padding-top:12px}
+  .vid{grid-template-columns:1fr}
+  .unit-card{grid-template-columns:1fr}
+}
+</style>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#home" aria-label="New Beginnings home">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="var(--brand)"/><path d="M8 26a12 12 0 0 1 24 0z" fill="var(--sun)"/><path d="M5 29h30M10 33h20" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+      New Beginnings
+    </a>
+    <button class="explore" id="exploreBtn" aria-expanded="false" aria-controls="mega">Explore
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg></button>
+    <span class="spacer"></span>
+    <a class="link" href="#donate">Donate</a>
+    <button class="link" id="loginBtn" aria-expanded="false">Log in</button>
+  </div>
+  <div id="mega" hidden><div class="wrap">
+    <div class="mega-col"><div class="mega-h">Browse by subject</div><div id="megaSecs"></div></div>
+    <div class="mega-col"><div class="mega-h" id="megaLH">Choose a language</div><div id="megaLangs"></div></div>
+  </div></div>
+  <div id="login" hidden>Logging in is optional. Progress is saved on this device without an account. Accounts will let learners keep progress across devices.</div>
+</header>
+
+<main id="app" class="wrap"></main>
+<div id="quiz" hidden></div>
+
+<footer><div class="wrap">New Beginnings. Free for every learner. This is a working prototype: videos are candidates to be checked, and most quizzes are still being written. Need help now? Call or text 988 (press 2 for Spanish).</div></footer>
+
+<script>
+/* ---------- data ---------- */
+var LANGS=[
+  {id:'en',native:'English',en:'English',lang:'en'},
+  {id:'es',native:'Español',en:'Spanish',lang:'es'},
+  {id:'zh',native:'中文（普通话）',en:'Mandarin',lang:'zh-Hans'},
+  {id:'vi',native:'Tiếng Việt',en:'Vietnamese',lang:'vi'}];
+var SECS=[
+  {id:'bep',en:'Basic English Pronunciation',blurb:'Listen, repeat and record your voice until the word sounds right.'},
+  {id:'bfj',en:'Basics on Finding Jobs in California',blurb:'Documents, where to look, resume, interview and getting to work.'},
+  {id:'cc',en:'Community College',blurb:'Careers, how to enroll and how to pay for your studies.'},
+  {id:'ged',en:'GED',blurb:'What the GED is, the four test subjects and how to prepare.'},
+  {id:'mh',en:'Mental Health',blurb:'Short lessons on stress, calm, sleep and finding help.'}];
+
+var UI={
+ es:{explore:'Explorar',unit:'Unidad',aboutC:'Sobre este curso',aboutU:'Sobre esta unidad',open:'Abrir unidad',soon:'Esta unidad está en preparación.',cert:'Completa todas las unidades para ganar tu certificado gratis.',back:'Volver al curso',live:'Disponible',draft:'En preparación'},
+ zh:{explore:'浏览',unit:'单元',aboutC:'关于本课程',aboutU:'关于本单元',open:'打开单元',soon:'本单元正在准备中。',cert:'完成所有单元，即可免费获得证书。',back:'返回课程',live:'已开放',draft:'准备中'},
+ vi:{explore:'Khám phá',unit:'Bài',aboutC:'Về khóa học này',aboutU:'Về bài học này',open:'Mở bài học',soon:'Bài học này đang được chuẩn bị.',cert:'Hoàn thành tất cả các bài để nhận chứng chỉ miễn phí.',back:'Quay lại khóa học',live:'Đã có',draft:'Đang chuẩn bị'}
+};
+
+var COURSES={
+bep:{
+ es:{t:'Pronunciación básica del inglés',a:'Aprende a pronunciar el inglés americano paso a paso. Escucha el modelo, graba tu voz y repite hasta decir la palabra bien. Las palabras son las que más cuestan a los hispanohablantes.',u:[
+  ['Las vocales del inglés','Aprende los sonidos de las vocales, como en sheep y ship.'],
+  ['Consonantes difíciles','Practica sonidos que los hispanohablantes dicen distinto, como th, v y la s al inicio.'],
+  ['Terminaciones y acento','Practica terminaciones como -s y -ed, y qué sílaba decir más fuerte.'],
+  ['Palabras de todos los días','Practica palabras del trabajo, la escuela, la tienda y el médico.'],
+  ['Oraciones completas','Practica frases completas para hablar en el trabajo, la escuela y la calle.']]},
+ zh:{t:'英语发音基础',a:'一步一步学习美式英语发音。先听标准发音，再录下你的声音，反复练习，直到说对为止。练习的词都是华语使用者容易发错的。',u:[
+  ['英语元音','学习元音的发音，例如 sheep 和 ship。'],
+  ['难发的辅音','练习华语使用者容易发错的音，例如 th、r 和 l、v 和 w。'],
+  ['词尾和重音','练习 -s、-ed 词尾，以及哪个音节要读得更重。'],
+  ['日常用词','练习工作、学校、商店和看医生时常用的词。'],
+  ['完整的句子','练习在工作、学校和日常生活中使用的完整句子。']]},
+ vi:{t:'Phát âm tiếng Anh cơ bản',a:'Học cách phát âm tiếng Anh Mỹ từng bước. Nghe mẫu, ghi âm giọng của bạn và lặp lại cho đến khi nói đúng. Các từ được chọn là những từ người Việt hay phát âm khó.',u:[
+  ['Nguyên âm tiếng Anh','Học âm của nguyên âm, như trong sheep và ship.'],
+  ['Phụ âm khó','Luyện những âm người Việt hay phát âm sai, như th, âm cuối, s và sh, r và l.'],
+  ['Âm cuối và trọng âm','Luyện âm cuối -s, -ed và âm tiết nào cần nhấn mạnh hơn.'],
+  ['Từ dùng hằng ngày','Luyện từ ở nơi làm việc, trường học, cửa hàng và phòng khám.'],
+  ['Câu hoàn chỉnh','Luyện câu đầy đủ để nói ở nơi làm việc, trường học và ngoài đường.']]}},
+bfj:{
+ es:{t:'Conceptos básicos para encontrar trabajo en California',a:'Aprende lo que necesitas para conseguir tu primer trabajo en California: documentos, dónde buscar, tu currículum, la entrevista y cómo llegar al trabajo.',u:[
+  ['Documentos para trabajar','Qué documentos piden los empleadores, cuáles son tus derechos y cómo cuidar tus papeles.'],
+  ['Dónde buscar trabajo','Cómo encontrar trabajos que puedes hacer en tiendas, almacenes, restaurantes y más.'],
+  ['Tu currículum','Cómo escribir un currículum sencillo, aunque no tengas experiencia en EE. UU.'],
+  ['La entrevista','Qué esperar en una entrevista y cómo contestar las preguntas más comunes.'],
+  ['Llegar al trabajo sin carro','Autobús, tren, bicicleta y otras formas de llegar a tu trabajo.']]},
+ zh:{t:'在加州找工作的基础知识',a:'了解找到第一份加州工作所需要的一切：证件、去哪里找、简历、面试，以及如何上下班。',u:[
+  ['工作所需的证件','雇主会要求哪些证件、你有哪些权利，以及如何保管证件。'],
+  ['到哪里找工作','在商店、餐厅、仓库等地方找到你能做的工作。'],
+  ['你的简历','即使没有美国工作经验，也能写出简单的简历。'],
+  ['面试','了解面试会怎样进行，以及如何回答常见问题。'],
+  ['没有车怎么上班','公交、火车、自行车和其他上下班方式。']]},
+ vi:{t:'Kiến thức cơ bản để tìm việc làm tại California',a:'Tìm hiểu những điều cần có để có công việc đầu tiên ở California: giấy tờ, nơi tìm việc, hồ sơ xin việc, phỏng vấn và cách đi làm.',u:[
+  ['Giấy tờ cần có để đi làm','Nhà tuyển dụng yêu cầu giấy tờ nào, quyền của bạn và cách giữ giấy tờ an toàn.'],
+  ['Tìm việc ở đâu','Tìm những công việc bạn có thể làm ở cửa hàng, kho hàng, nhà hàng và nhiều nơi khác.'],
+  ['Hồ sơ xin việc (CV)','Cách viết CV đơn giản, dù bạn chưa có kinh nghiệm làm việc ở Mỹ.'],
+  ['Phỏng vấn','Điều cần biết về buổi phỏng vấn và cách trả lời các câu hỏi thường gặp.'],
+  ['Đi làm khi không có xe','Xe buýt, tàu, xe đạp và các cách khác để đến nơi làm việc.']]}},
+cc:{
+ es:{t:'Colegio comunitario',a:'Descubre qué es un colegio comunitario en California, cómo inscribirte y cómo pagar tus estudios. Incluye carreras técnicas y certificados.',u:[
+  ['Qué es un colegio comunitario','Qué carreras y certificados ofrece, y en qué se diferencia de una escuela técnica.'],
+  ['Cómo inscribirte','Los pasos para solicitar, elegir clases y empezar.'],
+  ['Cómo pagar tus estudios','Becas, ayuda financiera y recursos gratis para terminar tus estudios.']]},
+ zh:{t:'社区大学',a:'了解加州社区大学是什么、如何报名，以及如何支付学费。包括职业技术课程和证书。',u:[
+  ['什么是社区大学','有哪些专业和证书，以及和职业学校有什么不同。'],
+  ['如何报名','申请、选课和开始上课的步骤。'],
+  ['如何支付学费','奖学金、财政援助和帮助你完成学业的免费资源。']]},
+ vi:{t:'Cao đẳng cộng đồng',a:'Tìm hiểu cao đẳng cộng đồng ở California là gì, cách đăng ký và cách trả học phí. Có cả ngành nghề kỹ thuật và chứng chỉ.',u:[
+  ['Cao đẳng cộng đồng là gì','Có những ngành và chứng chỉ nào, và khác trường nghề ra sao.'],
+  ['Cách đăng ký','Các bước nộp đơn, chọn lớp và bắt đầu học.'],
+  ['Cách trả học phí','Học bổng, hỗ trợ tài chính và nguồn lực miễn phí giúp bạn học xong.']]}},
+ged:{
+ es:{t:'GED: diploma de escuela secundaria',a:'Aprende qué es el GED, qué materias tiene el examen y cómo prepararte. El GED es una forma de obtener un diploma equivalente a la escuela secundaria.',u:[
+  ['Qué es el GED y quién lo necesita','Para quién es el GED y qué puertas te abre.'],
+  ['Las cuatro materias del examen','Matemáticas, lectura y escritura, ciencias y estudios sociales.'],
+  ['Cómo prepararte y registrarte','Dónde estudiar, cómo practicar y cómo inscribirte al examen.']]},
+ zh:{t:'GED：高中同等学历',a:'了解什么是 GED、考试有哪些科目，以及如何备考。GED 是取得高中同等学历证书的一种方式。',u:[
+  ['什么是 GED，谁需要它','GED 适合哪些人，以及它能带来什么机会。'],
+  ['考试的四个科目','数学、阅读与写作、科学和社会学科。'],
+  ['如何备考和报名','在哪里学习、如何练习以及如何报名考试。']]},
+ vi:{t:'GED: Chứng chỉ tương đương trung học',a:'Tìm hiểu GED là gì, kỳ thi có những môn nào và cách ôn thi. GED là một cách để có bằng tương đương trung học phổ thông.',u:[
+  ['GED là gì và ai cần GED','GED dành cho ai và mở ra cơ hội nào.'],
+  ['Bốn môn thi','Toán, đọc và viết, khoa học và xã hội.'],
+  ['Cách ôn thi và đăng ký','Học ở đâu, luyện tập thế nào và cách đăng ký thi.']]}}
+};
+
+
+UI.en={explore:'Explore',unit:'Unit',aboutC:'About this course',aboutU:'About this unit',open:'Open unit',soon:'This unit is being prepared.',cert:'Finish every unit to earn your free certificate.',back:'Back to course',live:'Available',draft:'In preparation',seeEn:'Read this unit in English'};
+UI.es.seeEn='Ver esta unidad en inglés';UI.zh.seeEn='查看英文版本';UI.vi.seeEn='Xem bài này bằng tiếng Anh';
+COURSES.bep.en={t:'Basic English Pronunciation',a:'Learn to say American English step by step. Listen to the model, record your voice, and repeat until the word sounds right.',u:[
+ ['English Vowels','Learn vowel sounds, like in sheep and ship.'],
+ ['Hard Consonants','Practice sounds many learners find hard: th, r, l, v and final sounds.'],
+ ['Endings and Stress','Practice endings like -s and -ed, and which part of a word to say louder.'],
+ ['Everyday Words','Practice words for work, school, stores and the doctor.'],
+ ['Whole Sentences','Practice full sentences for work, school and daily life.']]};
+COURSES.bfj.en={t:'Basics on Finding Jobs in California',a:'Learn what you need to get your first job in California: documents, where to look, your resume, the interview, and how to get to work.',u:[
+ ['Documents to Work','Which documents employers ask for, your rights, and how to protect your papers.'],
+ ['Where to Look for Jobs','Free job search help and common first jobs in stores, warehouses, restaurants and more.'],
+ ['Your Resume','How to write a simple resume, even with no U.S. experience.'],
+ ['The Interview','What to expect in an interview and how to answer common questions.'],
+ ['Getting to Work Without a Car','Bus, train, bike and other ways to get to your job.']]};
+COURSES.cc.en={t:'Community College',a:'Learn what a community college is in California, how to enroll, and how to pay. Includes career certificates and trade programs.',u:[
+ ['What Is a Community College?','Programs, certificates, and how it is different from trade school.'],
+ ['How to Enroll','Steps to apply, choose classes, and get started.'],
+ ['How to Pay','Fee waivers, financial aid, scholarships, and campus help.']]};
+COURSES.ged.en={t:'GED: High School Equivalency',a:'Learn what the GED is, what is on the test, and how to prepare.',u:[
+ ['What Is the GED?','Who it is for and what doors it opens.'],
+ ['The Four Test Subjects','Language arts, math, science, and social studies.'],
+ ['Prepare and Register','Where to study, how to practice, and how to sign up for the test.']]};
+COURSES.mh={
+ en:{t:'Mental Health: Caring for Your Mind',a:'Short lessons to help you care for your mind while you build a new life. Learn to calm stress, sleep better, and find help.',u:[
+  ['Stress When Starting Over','What many immigrants feel, and why it is normal.'],
+  ['Calming Your Body','Simple breathing and grounding exercises.'],
+  ['Sleep, Food and Routines','Small habits that help when life is hard.'],
+  ['Talking to Someone and Getting Help','Who to talk to, and what to do in a crisis.'],
+  ['Caring for Your Family and Keeping Hope','Ideas for immigrant parents.']]},
+ es:{t:'Salud mental: cuidar tu mente',a:'Lecciones cortas para cuidar tu mente mientras construyes una nueva vida. Aprende a calmar el estrés, dormir mejor y buscar ayuda.',u:[
+  ['El estrés de empezar de nuevo','Qué sienten muchas personas inmigrantes y por qué es normal.'],
+  ['Calmar tu cuerpo','Respiración y ejercicios sencillos para calmarte.'],
+  ['Sueño, comida y rutinas','Hábitos pequeños que ayudan cuando la vida es difícil.'],
+  ['Hablar con alguien y buscar ayuda','Con quién hablar y qué hacer en una crisis.'],
+  ['Cuidar a tu familia y mantener la esperanza','Ideas para padres y madres inmigrantes.']]},
+ zh:{t:'心理健康：照顾好你的心',a:'帮助你在建立新生活的同时照顾好自己的心。学习缓解压力、改善睡眠和寻求帮助。',u:[
+  ['重新开始的压力','许多移民的感受，以及为什么这很正常。'],
+  ['让身体平静下来','简单的呼吸和放松练习。'],
+  ['睡眠、饮食和日常作息','在困难时期有帮助的小习惯。'],
+  ['和人谈谈，寻求帮助','可以和谁谈，以及遇到危机时怎么办。'],
+  ['照顾家人，保持希望','给移民父母的一些想法。']]},
+ vi:{t:'Sức khỏe tinh thần: chăm sóc tâm trí',a:'Những bài ngắn giúp bạn chăm sóc tâm trí trong lúc xây dựng cuộc sống mới. Học cách giảm căng thẳng, ngủ ngon hơn và tìm sự giúp đỡ.',u:[
+  ['Áp lực khi bắt đầu lại','Nhiều người nhập cư cảm thấy gì và vì sao điều đó bình thường.'],
+  ['Làm dịu cơ thể','Bài tập thở và thư giãn đơn giản.'],
+  ['Giấc ngủ, ăn uống và thói quen','Những thói quen nhỏ giúp ích khi cuộc sống khó khăn.'],
+  ['Nói chuyện và tìm sự giúp đỡ','Nên nói chuyện với ai và làm gì khi khủng hoảng.'],
+  ['Chăm sóc gia đình và giữ hy vọng','Gợi ý cho cha mẹ nhập cư.']]}};
+
+/* Full sample unit: Basics on Finding Jobs, Spanish, Unit 1 */
+var BFJ1={
+ about:'En esta unidad aprendes qué documentos piden los empleadores en California, cuáles son tus derechos antes de empezar y cómo cuidar tus papeles. Al final hay un examen de 15 preguntas y una guía para guardar.',
+ lessons:[
+ {t:'Qué documentos piden los empleadores',vids:[
+  {t:'Qué es el Formulario I-9 y por qué lo piden',src:'USCIS (gobierno de EE. UU.)',q:[
+   {q:'¿Para qué sirve el Formulario I-9?',o:['Para pagar impuestos','Para confirmar tu identidad y tu permiso para trabajar','Para pedir ayuda de dinero','Para abrir una cuenta de banco'],a:1,why:'Tu empleador usa el I-9 para confirmar quién eres y que puedes trabajar en EE. UU.'},
+   {q:'¿Cuándo debes llenar tu parte del I-9 (Sección 1)?',o:['Después de un mes','A más tardar tu primer día de trabajo','Antes de la entrevista','Solo si tu jefe te lo pide otra vez'],a:1,why:'Tu parte se llena a más tardar el primer día de trabajo.'},
+   {q:'¿En cuántos días hábiles debes mostrar tus documentos al empleador?',o:['En 1 día','En 3 días hábiles','En 30 días','En 1 año'],a:1,why:'Tienes hasta 3 días hábiles después de empezar a trabajar.'},
+   {q:'¿Quién llena la Sección 2 del I-9?',o:['El empleador','Tu familia','El banco','La escuela'],a:0,why:'El empleador revisa tus documentos y llena la Sección 2.'}]},
+  {t:'Lista A, Lista B y Lista C: cuáles documentos sirven',src:'USCIS (gobierno de EE. UU.)',q:[
+   {q:'¿Qué muestra un documento de la Lista A?',o:['Solo tu dirección','Tu identidad y tu permiso de trabajo','Solo tu edad','Tu historial de crédito'],a:1,why:'Un documento de la Lista A sirve para las dos cosas.'},
+   {q:'¿Cuál de estos es un documento de la Lista A?',o:['Licencia de conducir','Tarjeta de residente permanente (Green Card)','Acta de nacimiento','Tarjeta de la biblioteca'],a:1,why:'La tarjeta de residente permanente está en la Lista A.'},
+   {q:'Si no tienes un documento de la Lista A, ¿qué presentas?',o:['Nada','Un documento de la Lista B y uno de la Lista C','Dos de la Lista B','Una carta de un amigo'],a:1,why:'Presentas uno de cada lista: B para identidad y C para permiso de trabajo.'},
+   {q:'¿Cuál es un ejemplo de la Lista B (identidad)?',o:['Licencia de conducir de California','Tarjeta del Seguro Social','Pasaporte de EE. UU.','Acta de nacimiento de EE. UU.'],a:0,why:'La licencia de conducir es de la Lista B. La tarjeta del Seguro Social y el acta de nacimiento son de la Lista C.'}]},
+  {t:'El número de Seguro Social y el ITIN',src:'Administración del Seguro Social (SSA) o IRS',q:[
+   {q:'¿Para qué usa tu empleador tu número de Seguro Social?',o:['Para reportar tus ingresos y tus impuestos','Para darte un descuento','Para saber tu edad','Para llamarte por teléfono'],a:0,why:'Se usa para reportar lo que ganas y los impuestos que pagas.'},
+   {q:'¿Para qué sirve el ITIN?',o:['Para pagar impuestos','Para tener permiso de trabajo','Para votar','Para manejar'],a:0,why:'El ITIN es un número para declarar impuestos.'},
+   {q:'¿El ITIN da permiso para trabajar?',o:['Sí, siempre','No','Solo en California','Solo con licencia'],a:1,why:'No. El ITIN no da permiso de trabajo.'},
+   {q:'Perdiste tu tarjeta del Seguro Social. ¿Dónde pides un duplicado sin pagar?',o:['En una página de internet que cobra el trámite','En la Administración del Seguro Social (SSA)','Con un amigo','En el banco'],a:1,why:'La SSA da la tarjeta de reemplazo gratis. Desconfía de páginas que cobran.'}]}]},
+ {t:'Tus derechos antes de empezar',vids:[
+  {t:'Tú escoges qué documentos presentar',src:'Departamento de Justicia de EE. UU. (IER) o USCIS'},
+  {t:'Tus derechos laborales en California',src:'Departamento de Relaciones Industriales de California'},
+  {t:'Salario mínimo y talón de pago',src:'Departamento de Relaciones Industriales de California'}]},
+ {t:'Cuida tus documentos y evita estafas',vids:[
+  {t:'Cómo guardar y copiar tus documentos',src:'Fuente oficial por elegir'},
+  {t:'Cómo reconocer una estafa de empleo',src:'Comisión Federal de Comercio (FTC)'},
+  {t:'Cómo pedir documentos de reemplazo',src:'Fuente oficial por elegir'}]}],
+ unitQuiz:[
+  {q:'¿Qué formulario llenas el primer día para confirmar que puedes trabajar?',o:['Formulario I-9','Formulario de la escuela','Solicitud de banco','Licencia de manejar'],a:0,why:'Es el Formulario I-9.'},
+  {q:'¿Cuántos días hábiles tienes para mostrar tus documentos?',o:['1 día','3 días hábiles','30 días','Un año'],a:1,why:'Tienes 3 días hábiles.'},
+  {q:'¿Cuál es un documento de la Lista A?',o:['Pasaporte de EE. UU.','Tarjeta de biblioteca','Tarjeta de estudiante','Recibo de luz'],a:0,why:'El pasaporte de EE. UU. muestra identidad y permiso de trabajo.'},
+  {q:'Con documentos de las Listas B y C, ¿qué presentas?',o:['Uno de cada lista','Dos de la Lista B','Dos de la Lista C','Ninguno'],a:0,why:'Presentas uno de la Lista B y uno de la Lista C.'},
+  {q:'¿Qué muestra un documento de la Lista C?',o:['Tu permiso de trabajo','Tu dirección','Tu estado civil','Tu salario'],a:0,why:'La Lista C muestra que tienes permiso para trabajar.'},
+  {q:'El ITIN sirve para…',o:['Declarar impuestos','Trabajar legalmente','Viajar','Votar'],a:0,why:'El ITIN es para impuestos. No da permiso de trabajo.'},
+  {q:'Entre los documentos permitidos, ¿quién escoge cuáles presentar?',o:['Tú','El empleador','El banco','Un vecino'],a:0,why:'Tú escoges entre los documentos permitidos.'},
+  {q:'Ya mostraste un documento válido, pero tu empleador pide uno específico. ¿Qué debes saber?',o:['El empleador no puede exigir un documento específico de la lista','Debes darle el que pide','Pierdes el trabajo','Debes pagar'],a:0,why:'El empleador no puede decirte cuál documento permitido mostrar.'},
+  {q:'Las leyes laborales de California protegen…',o:['A todos los trabajadores, sin importar su estatus migratorio','Solo a ciudadanos','Solo a residentes','Solo a quienes hablan inglés'],a:0,why:'Todos los trabajadores tienen derechos, como cobrar el salario mínimo.'},
+  {q:'En 2026, el salario mínimo estatal de California es…',o:['$12.00 por hora','$16.90 por hora','$25.00 por hora','$10.00 por hora'],a:1,why:'Algunas ciudades tienen un mínimo más alto. Revisa el de tu ciudad.'},
+  {q:'¿Qué muestra un talón de pago?',o:['Tus horas y tu pago','Tu historial médico','Tus amigos','Tu correo electrónico'],a:0,why:'El talón muestra horas, pago y descuentos.'},
+  {q:'Normalmente, ¿qué debes mostrar al empleador?',o:['Documentos originales','Fotos del teléfono','Fotocopias','Una carta'],a:0,why:'Casi siempre se piden documentos originales.'},
+  {q:'Pedir un duplicado de tu tarjeta del Seguro Social cuesta…',o:['Nada, es gratis en la SSA','$100','$500','Depende del banco'],a:0,why:'La SSA no cobra por la tarjeta de reemplazo.'},
+  {q:'¿Qué es buena idea hacer con tus documentos importantes?',o:['Guardarlos en un lugar seguro y tener copias','Dejarlos en el carro','Compartirlos en redes sociales','Dárselos a cualquiera'],a:0,why:'Un lugar seguro y una copia te ahorran problemas si pierdes uno.'},
+  {q:'Una persona te pide dinero para darte un trabajo. ¿Qué haces?',o:['Desconfío: puede ser una estafa','Pago rápido','Doy mi número de banco','Doy mi contraseña'],a:0,why:'Un empleador real no cobra por contratarte.'}],
+ guide:[
+  ['Por qué piden documentos','Cuando empiezas un trabajo en EE. UU., tu empleador debe confirmar quién eres y que puedes trabajar. Para eso usa el Formulario I-9. Es la ley para todos los empleadores y todos los trabajadores nuevos.'],
+  ['Tus pasos','<ul><li>Primer día de trabajo: llenas la Sección 1 del I-9.</li><li>Dentro de 3 días hábiles: muestras tus documentos originales.</li><li>El empleador revisa tus documentos y llena la Sección 2.</li></ul>'],
+  ['Las listas de documentos','<ul><li><b>Lista A</b> muestra identidad y permiso de trabajo. Ejemplos: pasaporte de EE. UU., tarjeta de residente permanente (Green Card).</li><li><b>Lista B</b> muestra identidad. Ejemplo: licencia de conducir de California.</li><li><b>Lista C</b> muestra permiso de trabajo. Ejemplos: tarjeta del Seguro Social sin restricciones, acta de nacimiento de EE. UU.</li></ul><p>Presentas un documento de la Lista A, o uno de la Lista B y uno de la Lista C. Hay más opciones en cada lista. La lista completa está en el sitio de USCIS.</p>'],
+  ['Seguro Social e ITIN','El número de Seguro Social se usa para reportar lo que ganas. El ITIN es un número para declarar impuestos y no da permiso de trabajo. Si pierdes tu tarjeta del Seguro Social, el duplicado es gratis en la Administración del Seguro Social.'],
+  ['Tus derechos','<ul><li>Tú escoges cuáles documentos permitidos presentas. El empleador no puede exigir uno específico.</li><li>Las leyes laborales de California protegen a todos los trabajadores, sin importar su estatus migratorio.</li><li>El salario mínimo estatal en 2026 es $16.90 por hora. Algunas ciudades tienen un mínimo más alto.</li><li>Recibes un talón de pago con tus horas y tu pago.</li></ul><p>Si crees que no respetaron tus derechos, puedes contactar a la Oficina del Comisionado Laboral de California.</p>'],
+  ['Cuida tus papeles','Guarda tus documentos en un lugar seguro. Ten copias en papel y una foto en tu teléfono, pero muestra los originales al empleador. Un empleador real no cobra por darte trabajo. Si alguien te pide dinero, desconfía.']],
+ well:{t:'Cuidar tu mente cuando empiezas de nuevo',d:'Un video de 15 a 20 minutos para adultos y familias inmigrantes sobre el estrés de empezar de nuevo en otro país, y cómo calmarte y cuidarte. Es obligatorio al final de cada unidad.',src:'Fuente por elegir: organización de salud mental sin fines de lucro'}
+};
+
+/* ---------- content: English base, Spanish sample unit, videos ---------- */
+function Q(s){var p=s.split('|');return {q:p[0],o:[p[1],p[2],p[3],p[4]],a:0,why:p[5]}}
+function Qs(a){return a.map(Q)}
+function Vd(s){var p=s.split('|');return {y:p[0],t:p[1],d:p[2],src:'',n:''}}
+function Dc(s){return s.split('##').map(function(sec){var i=sec.indexOf('::'),h=sec.slice(0,i),b=sec.slice(i+2);
+  return [h,b.indexOf(';;')>-1?'<ul>'+b.split(';;').map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>':b]})}
+function Ls(t,a,b,c,doc,src){var v=[Vd(a),Vd(b),Vd(c)];if(src)v.forEach(function(x){if(!x.y)x.src=src});return {t:t,v:v,doc:Dc(doc)}}
+
+var LB={
+ en:{lesson:'Lesson',summary:'Lesson summary',watch:'Watch on YouTube',mark:'Mark as watched',unmark:'Remove watched',watched:'Watched',practice:'Practice · 4 questions',soonQ:'Practice questions coming next',unitQuiz:'Unit quiz',unitQuizD:'15 questions about the whole unit.',startQuiz:'Start quiz',best:'Best score',finishU:'I finished this unit',finished:'✓ Unit finished',undo:'Undo',onUnit:'In this unit',tbd:'Video to be chosen',sug:'Suggested source',max:'Maximum 30 minutes',hint:'To finish: pass the quizzes, or mark the unit as finished.',
+  check:'Videos shown here are candidates found by title. Each one must be checked (channel, length, captions) before launch.',draftDoc:'Summaries are written from official information, not from the video transcripts. Compare them with the videos before launch.'},
+ es:{lesson:'Lección',summary:'Resumen de la lección',watch:'Ver en YouTube',mark:'Marcar como visto',unmark:'Quitar visto',watched:'Visto',practice:'Practicar · 4 preguntas',soonQ:'Preguntas en preparación',unitQuiz:'Examen de la unidad',unitQuizD:'15 preguntas sobre toda la unidad.',startQuiz:'Empezar examen',best:'Mejor resultado',finishU:'Terminé esta unidad',finished:'✓ Unidad terminada',undo:'Deshacer',onUnit:'En esta unidad',tbd:'Video por elegir',sug:'Fuente sugerida',max:'Máximo 30 minutos',hint:'Para terminar: pasa los exámenes o marca la unidad como terminada.',
+  check:'Estos videos son candidatos encontrados por su título. Hay que revisar cada uno (canal, duración, subtítulos) antes de publicar.',draftDoc:'Los resúmenes se escribieron con información oficial, no con la transcripción de los videos. Compáralos con los videos antes de publicar.'}
+};
+
+var EN={bfj:[],cc:[],ged:[],mh:[]};
+
+/* BFJ Unit 1 (English) */
+(function(){
+ var l1=Ls('Which documents employers ask for',
+  `hdj4r1F4_Ws|How to Fill Out the I-9 Form|How Form I-9 works`,
+  `oijoY3ozMjk|Form I-9 Breaking Down The List of Acceptable Documents|Lists A, B and C`,
+  `bXi-x15gppc|What is SSN - Social Security Number and ITIN|Social Security number and ITIN`,
+  `Why employers ask for documents::When you start a job in the U.S., your employer must confirm who you are and that you can work. The employer uses Form I-9. It is the law for every employer and every new worker.##Your steps::First day of work: you fill out Section 1 of the I-9.;;Within 3 business days: you show your original documents.;;The employer checks your documents and fills out Section 2.##The document lists::<b>List A</b> shows identity and permission to work. Examples: U.S. passport, permanent resident card (Green Card).;;<b>List B</b> shows identity. Example: California driver license.;;<b>List C</b> shows permission to work. Examples: unrestricted Social Security card, U.S. birth certificate.##Choosing documents::You show one List A document, or one List B and one List C document. Each list has more options. The full lists are on the USCIS website.##Social Security number and ITIN::A Social Security number is used to report what you earn. An ITIN is a number for filing taxes and does not give permission to work. If you lose your Social Security card, a replacement is free at the Social Security Administration.`);
+ l1.v[0].q=Qs([
+  `What is Form I-9 for?|To confirm your identity and your permission to work in the U.S.|To pay taxes|To ask for money help|To open a bank account|Your employer uses the I-9 to confirm who you are and that you can work in the U.S.`,
+  `When must you fill out your part of the I-9 (Section 1)?|No later than your first day of work|After one month|Before the interview|Only if your boss asks again|Your part is filled out no later than your first day of work.`,
+  `How many business days do you have to show your documents to your employer?|3 business days|1 day|30 days|1 year|You have up to 3 business days after you start work.`,
+  `Who fills out Section 2 of the I-9?|Your employer|Your family|The bank|The school|The employer checks your documents and fills out Section 2.`]);
+ l1.v[1].q=Qs([
+  `What does a List A document show?|Your identity and your permission to work|Only your address|Only your age|Your credit history|A List A document works for both.`,
+  `Which of these is a List A document?|Permanent resident card (Green Card)|Driver license|Birth certificate|Library card|The permanent resident card is on List A.`,
+  `If you do not have a List A document, what do you show?|One List B and one List C document|Nothing|Two List B documents|A letter from a friend|You show one from each list: B for identity and C for permission to work.`,
+  `Which is an example of List B (identity)?|California driver license|Social Security card|U.S. passport|U.S. birth certificate|A driver license is List B. The Social Security card and birth certificate are List C.`]);
+ l1.v[2].q=Qs([
+  `Why does your employer need your Social Security number?|To report your earnings and taxes|To give you a discount|To learn your age|To call you|It is used to report what you earn and the taxes you pay.`,
+  `What is an ITIN used for?|Filing taxes|Permission to work|Voting|Driving|An ITIN is a number for filing taxes.`,
+  `Does an ITIN give permission to work?|No|Yes, always|Only in California|Only with a license|No. An ITIN does not give work permission.`,
+  `You lost your Social Security card. Where do you ask for a free replacement?|Social Security Administration (SSA)|A website that charges a fee|A friend|The bank|The SSA gives a replacement card for free. Be careful with websites that charge.`]);
+ var l2=Ls('Your rights before you start',
+  `3RhjfBOAMAk|How Does IER Protect Your Rights?|Choosing which documents to show`,
+  `9ip9noK64As|All workers have rights|Worker rights in California`,
+  `Ghd8ZuAKbWQ|California increases minimum wage in 2026|The 2026 minimum wage`,
+  `Your rights::You choose which allowed documents to show. The employer cannot demand a specific one.;;California labor laws protect all workers, no matter their immigration status.;;The statewide minimum wage in 2026 is $16.90 per hour. Some cities pay more.;;You get a pay stub that shows your hours and pay.##If your rights are not respected::You can contact the California Labor Commissioner's Office.`);
+ var l3=Ls('Protect your documents and avoid scams',
+  `A-4N9z21U7o|Avoid Job Scams|Spotting a job scam`,
+  `eMyM3jwWOgM|How to avoid job training scams|Training scams`,
+  `9hNruRhLp9I|Job scams target your personal information|Protecting your information`,
+  `Take care of your papers::Keep your documents in a safe place. Keep paper copies and a photo on your phone, but show the originals to your employer.;;A real employer does not charge you to give you a job. If someone asks for money, be careful.`);
+ EN.bfj[0]={about:'In this unit you learn which documents employers ask for in California, your rights before you start, and how to protect your papers. There is a 15-question quiz at the end.',lessons:[l1,l2,l3],uq:Qs([
+  `Which form do you fill out on your first day to show you can work?|Form I-9|A school form|A bank application|A driver license|It is Form I-9.`,
+  `How many business days do you have to show your documents?|3 business days|1 day|30 days|One year|You have 3 business days.`,
+  `Which is a List A document?|U.S. passport|Library card|Student ID|Electric bill|A U.S. passport shows identity and permission to work.`,
+  `If you use List B and List C, what do you show?|One from each list|Two from List B|Two from List C|None|You show one List B and one List C document.`,
+  `What does a List C document show?|Your permission to work|Your address|Your marital status|Your salary|List C shows you are allowed to work.`,
+  `An ITIN is used for…|Filing taxes|Working legally|Traveling|Voting|An ITIN is for taxes. It does not give permission to work.`,
+  `Among the allowed documents, who chooses which to show?|You|Your employer|The bank|A neighbor|You choose among the allowed documents.`,
+  `You already showed a valid document, but your employer asks for a specific one. What should you know?|The employer cannot demand a specific document from the list|You must give the one they ask for|You will lose the job|You must pay|The employer cannot tell you which allowed document to show.`,
+  `California labor laws protect…|All workers, no matter their immigration status|Only citizens|Only residents|Only English speakers|All workers have rights, such as being paid at least minimum wage.`,
+  `In 2026, the statewide minimum wage in California is…|$16.90 per hour|$12.00 per hour|$25.00 per hour|$10.00 per hour|Some cities have a higher minimum. Check yours.`,
+  `What does a pay stub show?|Your hours and your pay|Your medical history|Your friends|Your email|A pay stub shows hours, pay, and deductions.`,
+  `What documents should you usually show your employer?|Originals|Phone photos|Photocopies|A letter|Almost always you show original documents.`,
+  `A replacement Social Security card costs…|Nothing, it is free at the SSA|$100|$500|It depends on the bank|The SSA does not charge for a replacement card.`,
+  `What is a good idea for your important documents?|Keep them safe and keep copies|Leave them in the car|Post them on social media|Give them to anyone|A safe place and a copy save you trouble if you lose one.`,
+  `Someone asks you for money to give you a job. What do you do?|Be careful: it may be a scam|Pay quickly|Give your bank number|Give your password|A real employer does not charge you to hire you.`])};
+})();
+
+/* BFJ Units 2 to 5 (English) */
+EN.bfj[1]={lessons:[
+ Ls(`CalJOBS and America's Job Centers`,
+  `baj2OG0Koz0|Job Searching on CalJOBS|How to search and save jobs`,
+  `OKttFUNguLk|CalJOBS Top 4 Tips|Quick tips for CalJOBS`,
+  `f88RtGsc5fQ|America's Job Center of California (AJCC) Virtual Orientation|What free help job centers offer`,
+  `What these services are::CalJOBS is the state's free job search website.;;America's Job Centers of California (AJCC) are free career centers that help with job search, resumes, and training.;;Never pay to see job listings or to get help from these services.##How to start::Create a free CalJOBS account.;;Upload a simple resume.;;Search by city, job title, or keyword and save the jobs you like.;;Visit or call a local job center and ask about free workshops.`),
+ Ls('Common first jobs',
+  `Lvh4nb0hnlE|How to land an entry-level job without experience|Ideas for first jobs`,
+  `LxZRDZYPOAI|Picking & Packing Jobs: The Ultimate Guide (No Experience Needed!)|What warehouse work is like`,
+  `7uH1dHx1gok|California Caregiver Training Requirements|What training caregiving jobs may need`,
+  `Jobs you can start with little experience::Stores and retail (cashier, stocking);;Warehouses (picking and packing);;Restaurants and kitchens;;Cleaning and building services;;Caregiving and home care (some jobs need training or a certificate)##How to apply::Ask at the store or look for "Careers" on the company website.;;Use CalJOBS and your local job center.;;Pay should be at least the minimum wage: $16.90 per hour statewide in 2026, and higher in some cities.`),
+ Ls('Filling out an online application',
+  `HFlOTrZl_T8|How to Fill Out Common Job Application Sections|The sections you will see`,
+  `5Q86pn4-KcE|How to Fill Out an Online Application|Step by step`,
+  `rVy-DALZlc8|The #1 Tip for Online Job Applications You NEED to Know|A tip to avoid mistakes`,
+  `Before you start::Write down past jobs, dates, and a phone number for each.;;Use the same name that is on your ID.;;Use a simple, professional email address.##While you fill it out::Answer honestly and check your spelling.;;Save or print a copy of what you sent.;;Never pay to apply. You usually do not give your Social Security number or bank details until after you are hired.`)]};
+EN.bfj[2]={lessons:[
+ Ls('Parts of a resume',
+  `QwYMxjv7A9Q|Components of a Resume|The main parts`,
+  `RDIl9_Z6nUk|Resume Writing Part 1: Resume Formats and Sections|Formats and sections`,
+  `ywkr9LdsksU|How to Write a Resume: 3 Main Resume Sections|The three main sections`,
+  `The parts::Contact information (name, phone, email, city);;A short summary (2 or 3 lines);;Work experience, newest job first;;Education;;Skills##Tips::Keep it to one page.;;Use simple words and a clear font.;;Check your spelling twice.`),
+ Ls('Writing a resume with no U.S. experience',
+  `ubiV8ItgTJE|Career Expert's Top Tips for a First-Time Resume|Tips for a first resume`,
+  `NRTs4HsICI8|First Resume Tips: How to Make a Resume with No Work Experience|No experience needed`,
+  `Fy_mtXaV8RQ|How to: make your first resume with no work experience|A short example`,
+  `What you can include::Jobs from your home country. Explain them in simple English.;;Volunteer work and community work.;;Skills such as languages you speak, using a phone or computer, and teamwork.;;Training or classes you took##Writing tips::Start each line with an action word: "helped", "cooked", "organized".;;Do not add a photo, your age, or your marital status. U.S. resumes usually leave them out.`),
+ Ls('Templates and references',
+  `vFAuF1i_0mY|How to Make a Resume in Google Docs (with FREE Templates!)|Free templates`,
+  `wW-QJnWxqRI|How To Choose Job References|Who to ask`,
+  `xuKaD7GkeW8|How to Ask for a Job Reference|What to say`,
+  `Free templates::Google Docs and Microsoft Word both have free resume templates.;;Save your resume as a PDF so the format does not change.##References::A reference is a person who can say you work well, such as a past boss or teacher.;;Choose two or three people and ask permission first.;;Write their name, job, phone, and email on a separate page.`)]};
+EN.bfj[3]={lessons:[
+ Ls('Getting ready',
+  `0MprWWQILbc|How to Ace an Entry Level Interview|Basic preparation`,
+  `HG68Ymazo18|Top Interview Tips: Common Questions, Nonverbal Communication & More|Body language and common questions`,
+  `LjXDzvbPSa0|Tips to Ease Your Interview Anxiety: Career Coach's Pro Advice|Staying calm`,
+  `Before the interview::Learn about the company and the job.;;Plan your trip. Practice it if you can.;;Bring your resume, your ID, and a pen.;;Dress clean and neat.##On the day::Arrive 10 to 15 minutes early.;;Smile, look at the person when you speak, and shake hands if they offer.;;Turn off your phone.`),
+ Ls('Common questions and simple answers',
+  `rXZMlyR1Fbw|10 Common Job Interview Questions and Answers (Job Interviews in English)|Common questions for English learners`,
+  `8yVvRQ7l1tM|English for Job Interviews|Useful phrases`,
+  `vH4zjhQLUMU|Learn English for Job Interviews|More practice`,
+  `Questions you may hear::Tell me about yourself.;;Why do you want this job?;;What are your strengths?;;When can you start? What days can you work?##How to answer::Keep answers short and honest.;;Give a simple example from past work.;;If you do not understand, say: "Could you say that again, please?"`),
+ Ls('After the interview',
+  `aE7bbHtSBoE|How to Write a Post-Interview Thank You Note (Template Included)|A thank-you note`,
+  `TGOCHbX6xTg|Do this FIRST when you get your job offer|What to do with an offer`,
+  `znku_lZ8mA4|10 TIPS for STARTING A NEW JOB! (What to DO and SAY on your FIRST DAY AT WORK!)|Your first day`,
+  `After the interview::Send a short thank-you email within one day.;;If you have not heard back in a week, send a polite follow-up.##If you get an offer::Ask for the pay, hours, start date, and address. Ask to get it in writing.;;On your first day you will fill out the I-9 and tax forms (federal W-4 and California DE 4).;;Arrive early and ask questions.`)]};
+EN.bfj[4]={lessons:[
+ Ls('Bus and train',
+  `DV2kvqJPPZ8|Clipper introduction (English)|The Bay Area transit card`,
+  `v7JykSA91z0|Caltrain: How to Ride|Riding Caltrain`,
+  `tW1Q4Z92tlw|Tap to Ride on SacRT Light Rail|Paying in Sacramento`,
+  `Bay Area::Clipper is a card (or phone wallet) that pays fares on many transit systems.;;Ask each agency if you can get a discount.##Sacramento::SacRT runs buses and light rail.;;You can tap to pay.##Tips::Check the schedule before you leave.;;Know the name of your stop and the time of the last bus or train.`),
+ Ls('Biking, walking and carpooling',
+  `YKP0T12_7W4|10 safety tips for bike commuters|Staying safe on a bike`,
+  `nvEi47RQINw|How to use a crosswalk safely|Walking safely`,
+  `BSZ5uuyGYh4|How Casual Carpooling Works|Sharing rides`,
+  `Biking::Wear a helmet and use lights at night.;;Follow traffic signs and ride with traffic.;;Lock your bike.##Walking::Use crosswalks and wait for the signal.##Carpooling::Ask coworkers if anyone lives near you.;;Some employers help with vanpools.`),
+ Ls('Planning your trip with a map app',
+  `sWXuCaVarC4|Google Maps for Transit Tutorial|Transit directions`,
+  `lpcpgAK4beM|Google Maps - How to Use Public Transport Directions|Step by step`,
+  `LAm12dtpPtI|The Correct Way to Check Transit Schedules on Google Maps|Checking times`,
+  `Steps::Open the map app and type your work address.;;Choose the bus or train tab.;;Set the time you need to arrive.;;Check for transfers and walking time.##Tips::Leave early the first week.;;Save your route.;;Have a backup plan.`)]};
+
+/* Community College (English) */
+(function(){
+ var S='California Community Colleges (YouTube channel)';
+ var l1=Ls('What a community college is',`|Video to be chosen|What a community college is`,`|Video to be chosen|Who can enroll and what it costs`,`|Video to be chosen|English classes and job training`,
+  `What it is::Community colleges are public colleges. California has 116 of them.;;They offer low-cost classes, English (ESL) classes, job training, and degrees.##Who goes::Adults of all ages, parents, workers, and new arrivals.;;Most community colleges are open to adults 18 and older. Ask the college about your situation.`,S);
+ l1.v[0].q=Qs([
+  `What is a community college?|A public college with low-cost classes|A private high school|A bank program|A job agency|Community colleges are public colleges that offer low-cost classes and programs.`,
+  `How long is a typical associate degree for a full-time student?|About 2 years|1 week|10 years|1 day|An associate degree usually takes about 2 years of full-time study.`,
+  `What can you earn at a community college?|Certificates and associate degrees|Only a law degree|Only a driver license|Nothing|You can earn short certificates and associate degrees, and prepare to transfer.`,
+  `Can community college classes help you transfer to a university?|Yes, many classes can transfer|No, never|Only in other countries|Only for children|Many classes can count toward a four-year university degree.`]);
+ l1.v[1].q=Qs([
+  `Who can usually enroll in a California community college?|Adults 18 and older|Only U.S. citizens|Only people with a college degree|Only people who speak perfect English|Community colleges are open to most adults. Ask the college about your situation.`,
+  `Compared with most private schools, community college usually costs…|Less|More|The same|It is always free|Community college usually costs less. Some students pay nothing with a fee waiver.`,
+  `Who can you ask about enrolling?|The college admissions office|A stranger online|A website that charges a fee|Nobody|The admissions office is free and can answer your questions.`,
+  `Should you pay a stranger to fill out your application?|No, applying is free|Yes, always|Only on weekends|Only by text|Applying to a California community college is free.`]);
+ l1.v[2].q=Qs([
+  `What does ESL stand for?|English as a Second Language|Easy School Lessons|Every Student Learns|English Study Level|ESL classes help adults learn English.`,
+  `Where can adults learn English at a community college?|In ESL classes|Only on online forums|Only at home|Nowhere|Many community colleges offer ESL classes.`,
+  `Which is an example of job training?|A certificate in a skilled trade|A pizza coupon|A bus pass|A library card|Certificates train you for jobs in less time than a degree.`,
+  `Who can help you choose classes?|A college counselor|A random website|A bank|A grocery store|Counselors help you choose classes and make a plan.`]);
+ EN.cc[0]={lessons:[l1,
+  Ls('Programs and paths',`|Video to be chosen|Certificates and degrees`,`|Video to be chosen|Transfer to a university`,`|Video to be chosen|Community college and trade school`,
+   `Choices::Certificate: short job training, often less than 2 years.;;Associate degree: about 2 years, can lead to a job or to transfer.;;Transfer: finish at community college, then continue at a four-year university.##Community college and trade school::Community colleges are public and usually cost less.;;Some private trade schools cost a lot. Ask about total cost, graduation rate, and job help before you sign.`,S),
+  Ls('Going back to school as an adult',`|Video to be chosen|Students who are parents or workers`,`|Video to be chosen|Evening and online classes`,`|Video to be chosen|Help for new arrivals`,
+   `You are not too old::Many students are adults, parents, and workers.;;Colleges offer evening, weekend, and online classes.##Help you can ask for::Counseling and tutoring.;;ESL classes.;;Child care and basic needs help at some colleges.`,S)]};
+ EN.cc[1]={lessons:[
+  Ls('Applying (CCCApply)',`|Video to be chosen|How to apply online`,`|Video to be chosen|What you need to apply`,`|Video to be chosen|After you apply`,
+   `Steps::Choose a college near you.;;Go to the college website and find "Apply". Most use the free CCCApply form.;;Fill out the form and keep your confirmation.;;Check your email for the next steps.##Good to know::Applying is free.;;You can apply even if you do not have a Social Security number. Ask the admissions office if you have questions.`,S),
+  Ls('Counselor and choosing classes',`|Video to be chosen|Meeting a counselor`,`|Video to be chosen|English and math classes`,`|Video to be chosen|Making a student education plan`,
+   `Starting English and math::Most colleges no longer require a placement test for English and math. Ask what is right for you.;;If you need to learn English first, ask about ESL placement.##Counselor::Meet a counselor to make a student education plan.;;Bring your goals and any past school records.`,S),
+  Ls('Your first weeks',`|Video to be chosen|Orientation`,`|Video to be chosen|Student ID and class website`,`|Video to be chosen|Tutoring and support`,
+   `Do these first::Go to orientation.;;Get your student ID.;;Learn how to log in to your class website.;;Find the tutoring center.##Tips::Start with a few classes if you work or have children.;;Ask your teacher for help early.`,S)]};
+ EN.cc[2]={lessons:[
+  Ls('Cost and the fee waiver',`|Video to be chosen|What classes cost`,`|Video to be chosen|The California College Promise Grant`,`|Video to be chosen|Books and other costs`,
+   `Costs::Fees per unit are low.;;Books and transportation add cost.##Fee waiver::The California College Promise Grant can waive enrollment fees for students who qualify.;;Apply through the college financial aid office.;;Many colleges also help with books or supplies. Ask.`,S),
+  Ls('FAFSA and the California Dream Act',`yj1Pn-shze8|Create your FSA ID video|Needed for the FAFSA`,`cmqA1CA5tYo|Assessing the California Dream Act Application (CADAA) video|The Dream Act application`,`fz9j-g1FIHQ|Tips for Parents video (FAFSA)|Help for parents`,
+   `Two applications::The FAFSA is the federal aid application.;;The California Dream Act Application is for students who may not qualify for federal aid, including some undocumented students.;;Both are free. Never pay to fill them out.##Ask for help::Your college financial aid office can tell you which application to use.`),
+  Ls('Scholarships and campus help',`|Video to be chosen|Finding scholarships`,`|Video to be chosen|Food and transportation help`,`|Video to be chosen|Child care and support services`,
+   `Scholarships::Ask your college about scholarships.;;Apply to many small scholarships.##Basic needs::Many colleges have food pantries, transportation help, and other support.;;Ask for the Basic Needs or Financial Aid office.`,S)]};
+})();
+
+/* GED (English) */
+(function(){
+ var S='GED Testing Service (ged.com)';
+ var l1=Ls('What the GED is',`|Video to be chosen|What is the GED?`,`|Video to be chosen|Why a high school equivalency helps`,`|Video to be chosen|Who can take the GED`,
+  `What the GED is::The GED is a group of four tests that show high-school-level skills.;;Many employers and colleges accept it.;;Check ged.com for the rules in California.`,S);
+ l1.v[0].q=Qs([
+  `What is the GED?|A set of tests that show high-school-level skills|A driver license|A work visa|A bank loan|The GED is a set of four tests that show you have high-school-level skills.`,
+  `How many subject tests are in the GED?|Four|One|Ten|Two|The GED has four subject tests.`,
+  `What is the GED?|A high school equivalency credential|A college degree|A visa|A job|Many employers and colleges accept it.`,
+  `Where can you find official information?|ged.com|A website that sells answers|A social media post|A stranger|ged.com is the official GED website.`]);
+ l1.v[1].q=Qs([
+  `What can a GED help you with?|Finding better jobs and applying to college|Becoming a citizen|Buying a car|Getting a free phone|Many jobs and colleges ask for a diploma or equivalent.`,
+  `Can people with a GED apply to community college?|Yes|No|Only in another state|Only at night|Colleges accept the GED.`,
+  `Where can you study for the GED?|At home or in a class|Only in a prison|Only with a lawyer|Only if you are a citizen|You can study in many ways.`,
+  `Should you pay for test answers or cheats?|No|Yes|Only online|Only for math|Never. They are scams.`]);
+ l1.v[2].q=Qs([
+  `Who usually takes the GED?|Adults who did not finish high school|Only young children|Only teachers|Only doctors|Adults who did not finish high school may take it.`,
+  `What should you check before registering?|The rules for your state on ged.com|The weather|A friend's opinion|A coupon|Rules for age and residency can change.`,
+  `Besides the GED, what else can some adults do?|Finish a diploma through an adult school|Nothing|Skip school forever|Take a driving test|Adult schools can offer a high school diploma.`,
+  `Who can you ask about free classes?|A local adult school|A stranger|A scam website|Nobody|Many adult schools offer free classes. Ask yours.`]);
+ EN.ged[0]={lessons:[l1,
+  Ls('Why a high school equivalency helps',`|Video to be chosen|Jobs and pay`,`|Video to be chosen|College and training`,`|Video to be chosen|Real stories`,
+   `Why it helps::More job choices and often higher pay.;;You can apply to community college and training programs.;;It shows you finished high school level skills.`,S),
+  Ls('Who can take it and other options',`|Video to be chosen|Age and state rules`,`|Video to be chosen|Adult school diploma programs`,`|Video to be chosen|Choosing what is right for you`,
+   `Who can take it::Adults who did not finish high school, within the state rules for age.;;Ask a local adult school about free classes and other ways to earn a diploma.`,S)]};
+ EN.ged[1]={lessons:[
+  Ls('Reasoning Through Language Arts',`WNwkVTLBfzY|Video from the ged.com Language Arts overview|Reading and writing on the test`,`|Video to be chosen|Reading passages`,`|Video to be chosen|Writing an essay`,
+   `Reasoning Through Language Arts::You read short passages and write an essay.;;Practice reading news, notices, and forms.;;Practice writing clear paragraphs.`,S),
+  Ls('Mathematical Reasoning',`|Video to be chosen|Numbers and fractions`,`|Video to be chosen|Basic algebra`,`|Video to be chosen|Word problems and geometry`,
+   `Mathematical Reasoning::Numbers, fractions, percents, basic algebra, and geometry.;;Word problems.;;A calculator is allowed for most questions. Practice with the one used on the test.`,S),
+  Ls('Science and Social Studies',`|Video to be chosen|Science: charts and experiments`,`|Video to be chosen|Social Studies: civics and history`,`|Video to be chosen|Economics and geography`,
+   `Science and Social Studies::Science: reading charts and simple experiments in life, earth, and physical science.;;Social Studies: civics, U.S. history, economics, and geography.;;Both tests mostly ask you to read and understand.`,S)]};
+ EN.ged[2]={lessons:[
+  Ls('Ways to study',`|Video to be chosen|Free adult school classes`,`|Video to be chosen|Practice tests`,`|Video to be chosen|A study plan`,
+   `Ways to study::Free adult school classes. Ask your local school district.;;Public library books and computers.;;The official practice test (GED Ready) shows what to study. It has a fee.;;Study a little every day.`,S),
+  Ls('Register and schedule',`Bxm4r_lXH-k|Sign Up for Success (GED Testing Service)|Creating a GED.com account`,`|Video to be chosen|Choosing a test day`,`|Video to be chosen|Paying for the test`,
+   `Steps::Create a free account at ged.com.;;Choose your location and the tests you want.;;Pick a day and time and pay.;;You can take one test at a time.`,S),
+  Ls('Test day and scores',`|Video to be chosen|What to bring`,`|Video to be chosen|During the test`,`|Video to be chosen|Understanding your scores`,
+   `Test day::Bring a valid photo ID.;;Arrive early and follow the testing center rules.##Scores::The passing score is 145 on each test. Check ged.com for the latest rules.;;If you do not pass, you can try again.`,S)]};
+})();
+
+/* Mental Health (English) */
+(function(){
+ var S='A nonprofit or clinic channel';
+ EN.mh[0]={lessons:[Ls('Feeling stress in a new country',`cKvR7au-VmA|Immigrant and Refugee Mental Health|Common feelings for immigrants`,`pF0Px5HeiIY|The silent grief of immigration and its impact on mental health|Missing home`,`hFUu03mxp24|Dealing with Homesickness|Coping with homesickness`,
+  `What many people feel::Missing home and family.;;Feeling lonely or tired.;;Worry about money, work, papers, or language.##You are not alone::These feelings are common. They are not a weakness.;;Talk about them with someone you trust.`)]};
+ EN.mh[1]={lessons:[Ls('Calm your body',`tEmt1Znux58|Box breathing relaxation technique: how to calm feelings of stress or anxiety|Slow breathing`,`pjRMg6KALiw|5-4-3-2-1 Grounding Exercise: Coping with Panic, Anxiety & Emotions|Grounding`,`LiUnFJ8P4gM|4-7-8 Calm Breathing Exercise|Another breathing exercise`,
+  `Slow breathing::Breathe in slowly, hold for a moment, and breathe out slowly. Repeat for a few minutes.##Grounding (5-4-3-2-1)::Name 5 things you see, 4 you feel, 3 you hear, 2 you smell, and 1 you taste.##Safety::If breathing exercises make you dizzy, stop and breathe normally.`)]};
+ EN.mh[2]={lessons:[Ls('Sleep, food and routines',`k7_Fi0G5GsM|Mayo Clinic Minute: Do you practice good sleep hygiene?|Sleep habits`,`s2lwUIKsRWg|Mayo Clinic Minute: Tips for Better Sleep|Better sleep`,`d47x2CO8u4E|What to Do if You're Feeling Stressed or Anxious: Tips on Healthy Eating, Sleep, Mindfulness & More|Daily habits`,
+  `Sleep::Go to bed and wake up at the same times.;;Keep the room dark and quiet.;;Avoid screens right before bed.##Food and movement::Eat regular meals and drink water.;;A short walk each day can help your mood.`)]};
+ EN.mh[3]={lessons:[Ls('Talking to someone and getting help',`JdaHcdwb394|What to know about the 988 Suicide & Crisis Lifeline|How 988 works`,`M1F7Ra-gKO0|How to talk to someone about your mental health|Starting the conversation`,`IR1nISWZ7o8|Get Help for Mental Health: Where to Turn and How to Help Others|Where to find help`,
+  `Who to talk to::A family member or friend you trust.;;A doctor or clinic.;;A counselor. Some community clinics and colleges offer low-cost counseling. Ask.##In a crisis::Call or text 988 any time in the U.S. It is free. For Spanish, press 2. You can also chat at 988lifeline.org.;;If someone is in immediate danger, call 911.`)]};
+ EN.mh[4]={lessons:[Ls('Caring for your family and keeping hope',`VjCHEZh19XI|On parenting as an immigrant|Parenting in a new country`,`IfMWbjCFxHk|The Unspoken Struggle of Immigrant Families|Family stress`,`|Video to be chosen|Hope and strength for immigrant families`,
+  `Caring for your family::Take small breaks. A rested parent can help children more.;;Share your feelings with your partner or a friend.;;Keep simple routines: meals, sleep, and play.##Keeping hope::Remember how far you have come.;;Connect with your community, faith group, or school.;;Celebrate small steps.`,S)]};
+})();
+
+/* Spanish sample unit: BFJ Unit 1 */
+var ESV=[
+ [['hdj4r1F4_Ws','How to Fill Out the I-9 Form','En inglés. Activa los subtítulos en español.'],['oijoY3ozMjk','Form I-9 Breaking Down The List of Acceptable Documents','En inglés. Activa los subtítulos en español.'],['KXp_wIf8uZI','¿Cuál es la Diferencia entre EIN, ITIN y SSN?','En español.']],
+ [['09XC_UeULaQ','Leyes Laborales y Derechos del Empleado en Estados Unidos','En español. No es solo de California.'],['BZtZKS55224','Carta de derechos de los trabajadores','En español. Video corto.'],['9ip9noK64As','All workers have rights','En inglés. Activa los subtítulos en español.']],
+ [['A-4N9z21U7o','Avoid Job Scams','En inglés. Activa los subtítulos en español.'],['eMyM3jwWOgM','How to avoid job training scams','En inglés. Activa los subtítulos en español.'],['9hNruRhLp9I','Job scams target your personal information','En inglés. Activa los subtítulos en español.']]];
+var ES_BFJ1={about:BFJ1.about,uq:BFJ1.unitQuiz,lessons:BFJ1.lessons.map(function(l,li){
+  return {t:l.t,doc:li===0?BFJ1.guide.slice(0,4):li===1?[BFJ1.guide[4]]:[BFJ1.guide[5]],
+    v:l.vids.map(function(v,vi){return {y:ESV[li][vi][0],t:ESV[li][vi][1],d:v.t,src:v.src,n:ESV[li][vi][2],q:v.q}})}})};
+
+/* Pronunciation "watch first" videos, by language and unit */
+var BEPV={
+ en:{1:`b3v3wmrhALc|Vowel Comparison: American English Pronunciation;;mV3hV6-PufQ|Short i vs. Long e`,2:`lFXzo7Kh8gs|TH Sound - Practice Tip - Rachel's English;;0rdF-KUvkwk|R + L Exercises: American English Pronunciation`,3:`A7hi-ipU2n0|How to Pronounce -ed verb endings: American English Pronunciation;;vvdFF5PO1G8|Word Stress in American English: English Rhythm for Clear Pronunciation`,4:`IERJyt2qKh8|Top 200 Most Common English Words with American Accent: Part 1;;sGhm-Ab5lH4|Grocery Store English Vocabulary for High School & Adult English Learners`,5:`EDdmqlarRQA|Sentence Stress in American English: Emphasize Content Words for English Rhythm;;FStyKn4V8cE|American English INTONATION - How to Understand Native English Speakers Better`},
+ es:{1:`l59pxMUJuIM|¡Domina las 12 vocales inglesas en menos de 11 minutos!;;3Q8gv8PNgy8|Cómo Pronunciar Vocales en Inglés`,2:`j6rneXW2GMw|Cómo pronunciar la TH en inglés;;RCXE1KlWf3k|Cómo pronunciar la B y la V en inglés`,3:`pt6qvRx5JtI|Cómo pronunciar -ED en inglés: /t/ /d/ /id/ (REGULAR VERBS);;9MnGYnt1Goo|Acento de las palabras en Inglés FÁCIL y RÁPIDO`,4:`Xv7srRFoNDc|50 Frases Comunes en Inglés que Usamos en el Trabajo;;vJyx6a2Cutg|13 Palabras de Trabajo en Inglés`,5:`um04Z45gNYY|Pronunciación en inglés: entonación, ritmo y acentuación de sílabas;;o10A_i-Gkis|El RITMO DEL INGLÉS - Pronunciación del inglés para hispanohablantes`},
+ zh:{1:`80XVMGj-BMI|美式音标课：12个元音;;-uLfUK2eA1Q|《零基础英语》 最常发错的两个元音 /i/ 和 /ɪ/`,2:`Bfby1FKDDIg|《中国式发音纠正》英语中 "th" 到底该怎么发音？;;GrhbdPmfnEo|美式英语VS中文发音位置全解析: How To Sound American (IN MANDARIN)`,3:`Kkv4rPWETt0|英文結尾 -ed 和 -s 的「正確」發音，取決於有聲、無聲音;;da6fuBCWOAc|突破英语听力口语瓶颈04：纠正单词重音，摆脱中式英语`,4:`voMBCHeVgSg|【从零开始学英语】150个日常生活用品单词发音教学;;TmnrfTYh9Ek|108句最实用职场英文｜每天上班都用得到！`,5:`7dgmq7Be-kg|突破英语听力口语瓶颈05：掌握句子重音2条规则，秒变地道美音;;68ciFYuN7PY|【老张学英语007】美式英语语音语调｜如何拥有美式腔调？`},
+ vi:{1:`1Rb1upBcHg8|Cùng Học Phát Âm Tiếng Anh - Bảng Phiên Âm Quốc Tế IPA [BÀI 1: 12 Nguyên Âm Đơn];;6hsxeDYMdcQ|Cách Phát Âm Nguyên Âm /i/ và /ɪ/`,2:`WcgKC2SSfyE|Cách phát âm âm TH không rung - âm /θ/;;WBVtja6Ee-8|Final consonants - For Vietnamese learners of English - part 1`,3:`ZMMSK_JuW24|Hướng dẫn phát âm đuôi -ed; -s; -es trong Tiếng Anh;;jmvvqKOW6W8|Trọng Âm Trong Tiếng Anh - Word Stress`,4:`mvXb-BTG9iU|70 CÂU TIẾNG ANH GIAO TIẾP CƠ BẢN CỦA NGƯỜI MỸ - cho người đi làm;;hS0aAgI5K3k|Tiếng Anh giao tiếp thông dụng trong siêu thị [#7]`,5:`v_JgkOFmfc4|Ngữ Điệu Trong Tiếng Anh Giọng Mỹ;;RYBxU46P-zI|[LỖI SAI THƯỜNG GẶP KHI NGƯỜI VIỆT NÓI TIẾNG ANH] TẬP 3: INTONATION - NGỮ ĐIỆU`}
+};
+
+function getUnit(sec,lid,n){
+  if(lid==='en')return (EN[sec]&&EN[sec][n-1])||null;
+  if(lid==='es'&&sec==='bfj'&&n===1)return ES_BFJ1;
+  return null;
+}
+
+/* ---------- state ---------- */
+var P={};
+try{P=JSON.parse(localStorage.getItem('nb-progress')||'{}')}catch(e){P={}}
+function save(){try{localStorage.setItem('nb-progress',JSON.stringify(P))}catch(e){}}
+var $=function(s){return document.querySelector(s)};
+var app=$('#app');
+var megaSec='bfj';
+
+/* ---------- helpers ---------- */
+function secOf(id){return SECS.filter(function(s){return s.id===id})[0]}
+function langOf(id){return LANGS.filter(function(l){return l.id===id})[0]}
+var PLAY='<svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="none" stroke="currentColor" stroke-width="2"/><path d="M18 14l13 8-13 8z" fill="currentColor"/></svg>';
+
+/* ---------- mega menu ---------- */
+function renderMega(){
+  $('#megaSecs').innerHTML=SECS.map(function(s){
+    return '<button class="mega-item'+(s.id===megaSec?' on':'')+'" data-sec="'+s.id+'">'+s.en+'<span aria-hidden="true">›</span></button>';}).join('');
+  $('#megaLH').textContent='Choose a language';
+  $('#megaLangs').innerHTML=LANGS.map(function(l){
+    return '<a class="mega-lang" lang="'+l.lang+'" href="#c-'+megaSec+'-'+l.id+'">'+l.native+'<small>'+secOf(megaSec).en+' · '+l.en+'</small></a>';}).join('');
+}
+function toggleMega(open){
+  var b=$('#exploreBtn'),m=$('#mega');
+  if(open===undefined)open=m.hidden;
+  m.hidden=!open;b.setAttribute('aria-expanded',String(open));
+  if(open){renderMega();$('#login').hidden=true}
+}
+$('#exploreBtn').addEventListener('click',function(e){e.stopPropagation();toggleMega()});
+$('#mega').addEventListener('click',function(e){
+  var b=e.target.closest('[data-sec]');
+  if(b){megaSec=b.getAttribute('data-sec');renderMega();return}
+  if(e.target.closest('a'))toggleMega(false);
+});
+$('#mega').addEventListener('mouseover',function(e){
+  var b=e.target.closest('[data-sec]');
+  if(b&&b.getAttribute('data-sec')!==megaSec){megaSec=b.getAttribute('data-sec');renderMega()}
+});
+$('#loginBtn').addEventListener('click',function(e){
+  e.stopPropagation();var l=$('#login');l.hidden=!l.hidden;this.setAttribute('aria-expanded',String(!l.hidden));toggleMega(false);
+});
+document.addEventListener('click',function(e){
+  if(!e.target.closest('#top')){toggleMega(false);$('#login').hidden=true}
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){toggleMega(false);$('#login').hidden=true;closeQuiz()}
+});
+
+function unitDone(sec,lid,n){
+  if(sec==='bep'){for(var k=1;k<=4;k++){if(!P['bep-'+lid+'-'+n+'-'+k])return false}return true}
+  var key=sec+'-'+lid+'-'+n;if(P[key+':done'])return true;
+  var d=getUnit(sec,lid,n);if(!d)return false;
+  var need=[];d.lessons.forEach(function(l,li){l.v.forEach(function(v,vi){if(v.q)need.push(key+':q'+li+vi)})});
+  if(d.uq)need.push(key+':uq');
+  return need.length>0&&need.every(function(x){return P[x]});
+}
+/* ---------- views ---------- */
+function home(){
+  app.innerHTML=
+  '<div class="hero"><div class="wrap"><h1>Welcome to New Beginnings</h1>'+
+  '<p>New Beginnings is a free learning website for immigrant families in California. It was built by me, an immigrant, for people on the same road: learning English pronunciation, finding work, and planning for community college or a GED. I have made these courses for you, and the languages are English, Spanish, Mandarin, and Vietnamese.</p>'+
+  '<div class="row"><button class="btn" id="heroExplore">Explore courses</button><a class="btn ghost" href="#c-bfj-en">See a sample course</a></div></div>'+
+  '<svg class="sunrise" viewBox="0 0 420 220" aria-hidden="true"><path d="M60 220a150 150 0 0 1 300 0z" fill="var(--sun)"/><path d="M0 196h420M40 214h340" stroke="#dcecee" stroke-width="3" stroke-linecap="round" opacity=".55"/></svg></div>'+
+  '<div class="adgrid"><aside class="ad rail" aria-label="Advertisement preview">Google Ad<small>left column · 160×600</small></aside><div class="homecol">'+
+  '<section class="block"><h2>Start with a subject</h2><p class="sub">Pick a subject, then the language you want to learn in. Each language page is written only in that language.</p><div class="cards">'+
+  SECS.map(function(s){return '<div class="card"><h3>'+s.en+'</h3><p>'+s.blurb+'</p><div class="langs">'+
+   LANGS.map(function(l){return '<a class="chip" lang="'+l.lang+'" href="#c-'+s.id+'-'+l.id+'">'+l.native+'</a>'}).join('')+'</div></div>'}).join('')+
+  '</div></section>'+
+  '<section class="block"><h2>How every unit works</h2><p class="sub">Each unit follows the same steps, in the same order.</p><ol class="steps">'+
+  '<li><div><b>Watch 3 short videos in each lesson</b><span>From trusted sources such as government agencies. Each video is 30 minutes or less.</span></div></li>'+
+  '<li><div><b>Practice after each video</b><span>Four questions that check the main points. Pronunciation units use your voice instead.</span></div></li>'+
+  '<li><div><b>Read the lesson summary</b><span>A short reading after each lesson with everything you need to remember.</span></div></li>'+
+  '<li><div><b>Take the unit quiz</b><span>Fifteen questions that cover the whole unit. A check mark shows when you finish a unit.</span></div></li>'+
+  '<li><div><b>Take care of your mind</b><span>Mental Health is its own subject, with short videos on stress, calm, sleep and finding help.</span></div></li></ol></section>'+
+  '<div class="ad banner" aria-label="Advertisement preview">Google Ad<small>bottom banner · 728×90</small></div>'+
+  '</div><aside class="ad rail" aria-label="Advertisement preview">Google Ad<small>right column · 160×600</small></aside></div>';
+  $('#heroExplore').addEventListener('click',function(e){e.stopPropagation();toggleMega(true);window.scrollTo(0,0)});
+}
+
+function course(sec,lid){
+  var c=COURSES[sec][lid],U=UI[lid],L=langOf(lid),S=secOf(sec);
+  var built=function(n){return sec==='bep'||!!getUnit(sec,lid,n)};
+  app.innerHTML='<div lang="'+L.lang+'">'+
+   '<div class="crumb"><a href="#home" lang="en">New Beginnings</a><span>›</span><span lang="en">'+S.en+'</span><span>›</span><span>'+L.native+'</span></div>'+
+   '<div class="page-h"><span class="tag">'+L.native+'</span><h1>'+c.t+'</h1></div>'+
+   '<div class="about"><h2>'+U.aboutC+'</h2><p>'+c.a+'</p></div>'+
+   '<div class="units">'+c.u.map(function(u,i){var n=i+1,b=built(n),dn=unitDone(sec,lid,n);
+     return '<div class="unit-card"><div><div class="u">'+U.unit+' '+n+'</div><h3>'+u[0]+'</h3><p>'+u[1]+'</p></div>'+
+      '<div style="display:grid;gap:8px;justify-items:end">'+(dn?'<span class="tick" aria-label="completo">✓ ✓</span>':'')+'<span class="pill'+(b?' live':'')+'">'+(b?U.live:U.draft)+'</span><a class="btn small" href="#u-'+sec+'-'+lid+'-'+n+'">'+U.open+'</a></div></div>'}).join('')+'</div>'+
+   '<div class="cert">'+U.cert+'</div></div>';
+}
+
+function unit(sec,lid,n){
+  var c=COURSES[sec][lid],U=UI[lid],L=langOf(lid),u=c.u[n-1];
+  if(!u){location.hash='#home';return}
+  var head='<div class="crumb"><a href="#home" lang="en">New Beginnings</a><span>›</span><a href="#c-'+sec+'-'+lid+'">'+c.t+'</a><span>›</span><span>'+U.unit+' '+n+'</span></div>'+
+    '<div class="page-h"><span class="tag">'+U.unit+' '+n+'</span><h1>'+u[0]+'</h1></div>';
+  if(sec==='bep')return unitBEP(head,u,lid,n);
+  var d=getUnit(sec,lid,n);
+  if(d)return unitPage(head,u,sec,lid,n,d);
+  app.innerHTML='<div lang="'+L.lang+'">'+head+'<div class="about"><h2>'+U.aboutU+'</h2><p>'+u[1]+'</p></div><div class="note" style="margin-top:16px">'+U.soon+'</div>'+
+    '<div class="acts" style="margin-top:16px;padding-bottom:50px"><a class="btn" href="#u-'+sec+'-en-'+n+'">'+U.seeEn+'</a><a href="#c-'+sec+'-'+lid+'">‹ '+U.back+'</a></div></div>';
+}
+function vcard(v,key,li,vi,B){
+  var w=P[key+':v'+li+vi],qd=P[key+':q'+li+vi];
+  var media=v.y?'<a class="shot" href="https://www.youtube.com/watch?v='+v.y+'" target="_blank" rel="noopener" aria-label="'+B.watch+'">'+PLAY+'<em>YouTube ↗</em></a>':'<div class="shot">'+PLAY+'<em>'+B.tbd+'</em></div>';
+  return '<div class="vid">'+media+'<div><h3>'+v.t+'</h3>'+(v.d?'<p style="font-size:15px;margin-bottom:6px">'+v.d+'</p>':'')+
+   '<div class="meta">'+(v.src?'<span>'+B.sug+': '+v.src+'</span>':'')+(v.n?'<span>'+v.n+'</span>':'')+'<span>'+B.max+'</span></div>'+
+   '<div class="acts"><button class="btn small ghost" onclick="toggle(\''+key+':v'+li+vi+'\')">'+(w?B.unmark:B.mark)+'</button>'+(w?'<span class="tick">✓ '+B.watched+'</span>':'')+
+   (v.q?'<button class="btn small" onclick="startQuiz(\''+key+'\',\''+li+'-'+vi+'\')">'+B.practice+'</button>'+(qd?'<span class="tick">✓ '+qd+'/4</span>':''):'<button class="btn small" disabled>'+B.soonQ+'</button>')+
+   '</div></div></div>';
+}
+function unitPage(head,u,sec,lid,n,d){
+  var L=langOf(lid),U=UI[lid],B=LB[lid]||LB.en,key=sec+'-'+lid+'-'+n,done=unitDone(sec,lid,n);
+  var lessons=d.lessons.map(function(l,li){
+    return '<section class="lesson" id="les'+li+'"><div class="eyebrow">'+B.lesson+' '+(li+1)+'</div><h2>'+l.t+'</h2><div class="vids">'+
+     l.v.map(function(v,vi){return vcard(v,key,li,vi,B)}).join('')+'</div>'+
+     '<div class="panel guide" id="doc'+li+'" style="margin-top:14px"><h2>'+B.summary+'</h2>'+
+     l.doc.map(function(g){return '<h3>'+g[0]+'</h3>'+(g[1].charAt(0)==='<'?g[1]:'<p>'+g[1]+'</p>')}).join('')+'</div></section>'}).join('');
+  var uq=d.uq?'<section class="panel hl" id="uq"><h2>'+B.unitQuiz+'</h2><p>'+B.unitQuizD+'</p><div class="acts"><button class="btn" onclick="startQuiz(\''+key+'\',\'unit\')">'+B.startQuiz+'</button>'+(P[key+':uq']?'<span class="tick">✓ '+B.best+': '+P[key+':uq']+'/15</span>':'')+'</div></section>':'';
+  var fin='<section class="panel"><div class="acts">'+(P[key+':done']?'<span class="tick">'+B.finished+'</span><button class="btn small ghost" onclick="toggle(\''+key+':done\')">'+B.undo+'</button>':'<button class="btn" onclick="toggle(\''+key+':done\')">'+B.finishU+'</button>')+'</div></section>';
+  app.innerHTML='<div lang="'+L.lang+'">'+head+'<div class="about"><h2>'+U.aboutU+'</h2><p>'+(d.about||u[1])+'</p></div>'+
+   '<div class="unit-grid"><aside class="side" aria-label="'+B.onUnit+'"><h2>'+B.onUnit+'</h2>'+
+   '<p'+(done?' class="tick"':' style="color:var(--muted)"')+' style="font-size:14px">'+(done?B.finished:B.hint)+'</p>'+
+   d.lessons.map(function(l,li){return '<button class="nav" onclick="scrollToId(\'les'+li+'\')">'+B.lesson+' '+(li+1)+': '+l.t+'</button>'}).join('')+
+   (d.uq?'<button class="nav" onclick="scrollToId(\'uq\')">'+B.unitQuiz+'</button>':'')+'</aside>'+
+   '<div class="main"><div class="note">'+B.check+' '+B.draftDoc+'</div>'+lessons+uq+fin+'</div></div></div>';
+}
+
+/* ---------- pronunciation engine ---------- */
+var PU={
+ es:{secL:function(n){return 'Sección '+n},listen:'Escuchar',rec:'Grabar mi voz',tip:'Consejo',next:'Siguiente',start:'Empezar',again:'Intentar otra vez',close:'Cerrar',
+  good:'¡Bien! Sigue con la siguiente.',retry:'Casi. Escucha otra vez e inténtalo de nuevo.',heard:'Escuché:',recording:'Grabando…',mine:'Mi voz',
+  mic:'Cuando toques Grabar, tu navegador te pedirá permiso para usar el micrófono.',
+  how:'Escucha el modelo en inglés americano. Toca Grabar y di la palabra. Repite hasta que suene bien.',
+  blocked:'El micrófono no está disponible en esta vista previa. En el sitio real, el navegador pide permiso. Este es un ejemplo de cómo funcionará.',
+  noSR:'Este navegador no puede revisar tu voz. Escúchala y compárala con el modelo.',done:'Terminaste esta sección.',nextSec:'Siguiente sección',toUnit:'Volver a la unidad'},
+ zh:{secL:function(n){return '第 '+n+' 部分'},listen:'听标准发音',rec:'录下我的声音',tip:'提示',next:'下一个',start:'开始',again:'再试一次',close:'关闭',
+  good:'很好！继续下一个。',retry:'差一点。再听一遍，再试一次。',heard:'我听到：',recording:'正在录音…',mine:'我的声音',
+  mic:'点“录下我的声音”后，浏览器会请求使用麦克风的权限。',
+  how:'听美式英语的标准发音。点“录下我的声音”，说出这个词。重复练习，直到发音正确。',
+  blocked:'此预览中无法使用麦克风。在真实网站上，浏览器会请求权限。下面是它的示例效果。',
+  noSR:'此浏览器无法检查你的发音。请听听你的声音，并和标准发音比较。',done:'你完成了这一部分。',nextSec:'下一部分',toUnit:'回到单元'},
+ vi:{secL:function(n){return 'Phần '+n},listen:'Nghe',rec:'Ghi âm giọng tôi',tip:'Mẹo',next:'Tiếp theo',start:'Bắt đầu',again:'Thử lại',close:'Đóng',
+  good:'Tốt lắm! Tiếp tục nhé.',retry:'Gần đúng rồi. Nghe lại và thử lần nữa.',heard:'Tôi nghe thấy:',recording:'Đang ghi âm…',mine:'Giọng của tôi',
+  mic:'Khi bạn nhấn Ghi âm, trình duyệt sẽ hỏi quyền sử dụng micro.',
+  how:'Nghe mẫu tiếng Anh Mỹ. Nhấn Ghi âm và nói từ đó. Lặp lại cho đến khi đúng.',
+  blocked:'Không thể dùng micro trong bản xem trước này. Trên trang web thật, trình duyệt sẽ hỏi quyền. Đây là ví dụ cách nó hoạt động.',
+  noSR:'Trình duyệt này không kiểm tra được giọng nói. Hãy nghe giọng của bạn và so sánh với mẫu.',done:'Bạn đã hoàn thành phần này.',nextSec:'Phần tiếp theo',toUnit:'Quay lại bài học'}
+};
+function W(x){return x.split(',').map(function(a){var p=a.split('|');return {w:p[0],i:p[1]||''}})}
+function Sn(x){return x.split('|').map(function(a){return {w:a,i:'',s:true}})}
+var TH={t:'th',w:W('think|θɪŋk,three|θriː,this|ðɪs,mother|ˈmʌðɚ')};
+var PRON={
+ 1:[{t:'ee · ih',w:W('sheep|ʃiːp,ship|ʃɪp,seat|siːt,sit|sɪt')},
+    {t:'oo · uu',w:W('pool|puːl,pull|pʊl,food|fuːd,foot|fʊt')},
+    {t:'a · u',w:W('cat|kæt,cut|kʌt,cap|kæp,cup|kʌp')},
+    {t:'o · oa',w:W('hot|hɑːt,hut|hʌt,bought|bɔːt,boat|boʊt')}],
+ 2:{es:[TH,{t:'v · b',w:W('very|ˈvɛri,berry|ˈbɛri,vote|voʊt,boat|boʊt')},
+        {t:'s + consonant',w:W('school|skuːl,street|striːt,speak|spiːk,small|smɔːl')},
+        {t:'ch · sh · j · y',w:W('chair|tʃɛr,share|ʃɛr,job|dʒɑːb,yellow|ˈjɛloʊ')}],
+    zh:[TH,{t:'r · l',w:W('right|raɪt,light|laɪt,road|roʊd,load|loʊd')},
+        {t:'v · w',w:W('vest|vɛst,west|wɛst,van|væn,wine|waɪn')},
+        {t:'final sounds',w:W('bed|bɛd,bag|bæɡ,work|wɝːk,nice|naɪs')}],
+    vi:[TH,{t:'final sounds',w:W('cat|kæt,bed|bɛd,lunch|lʌntʃ,bus|bʌs')},
+        {t:'s · sh',w:W('sea|siː,she|ʃiː,sip|sɪp,ship|ʃɪp')},
+        {t:'r · l',w:W('red|rɛd,led|lɛd,right|raɪt,light|laɪt')}]},
+ 3:[{t:'-s endings',w:W('cats|kæts,dogs|dɔːɡz,buses|ˈbʌsɪz,works|wɝːks')},
+    {t:'-ed endings',w:W('worked|wɝːkt,played|pleɪd,wanted|ˈwɑːntɪd,helped|hɛlpt')},
+    {t:'word stress',w:W('apply|əˈplaɪ,answer|ˈænsɚ,paycheck|ˈpeɪtʃɛk,today|təˈdeɪ')},
+    {t:'long words',w:W('interview|ˈɪntɚvjuː,application|ˌæplɪˈkeɪʃən,schedule|ˈskɛdʒuːl,community|kəˈmjuːnəti')}],
+ 4:[{t:'at work',w:W('boss|bɔːs,shift|ʃɪft,salary|ˈsæləri,break|breɪk')},
+    {t:'at school',w:W('teacher|ˈtiːtʃɚ,homework|ˈhoʊmwɝːk,class|klæs,college|ˈkɑːlɪdʒ')},
+    {t:'at the store',w:W('receipt|rɪˈsiːt,cashier|kæˈʃɪr,price|praɪs,discount|ˈdɪskaʊnt')},
+    {t:'doctor and bank',w:W('appointment|əˈpɔɪntmənt,insurance|ɪnˈʃʊrəns,medicine|ˈmɛdɪsən,account|əˈkaʊnt')}],
+ 5:[{t:'meeting people',w:Sn('My name is Ana.|Nice to meet you.|I am looking for a job.|Where are you from?')},
+    {t:'at work',w:Sn('I can start on Monday.|What time is my shift?|Can you say that again, please?|I have a question about my paycheck.')},
+    {t:'at school',w:Sn('I want to apply to community college.|Where is the financial aid office?|How much does this class cost?|I need help with my homework.')},
+    {t:'every day',w:Sn('How much does this cost?|Can I have a receipt, please?|I have an appointment at three o\'clock.|Please speak more slowly.')}]
+};
+var TIPS1=[
+ {es:'En español no hay esta diferencia. Ship es corta y relajada. Sheep es larga, con la boca como sonriendo.',zh:'ship 的元音短而放松，sheep 的元音长，嘴角向两边拉开。',vi:'Ship ngắn và thả lỏng. Sheep dài, miệng kéo ngang như đang cười.'},
+ {es:'Pool es larga, con los labios redondos. Pull es corta y más relajada.',zh:'pool 的元音长，嘴唇圆；pull 的元音短，更放松。',vi:'Pool dài, môi tròn. Pull ngắn và thả lỏng hơn.'},
+ {es:'Cat lleva la boca bien abierta. Cut es corta, como una “a” suave.',zh:'cat 的嘴要张大；cut 的元音短，像轻轻的“啊”。',vi:'Cat mở miệng rộng. Cut ngắn, như âm “â” nhẹ.'},
+ {es:'Hot abre la boca. Boat termina con una “u” suave: o-u.',zh:'hot 要张大嘴；boat 以轻轻的“u”结尾：o-u。',vi:'Hot mở miệng rộng. Boat kết thúc bằng âm “u” nhẹ: o-u.'}];
+var TIPS2={
+ es:['Pon la punta de la lengua entre los dientes y sopla. No es “t” ni “s”.','En inglés la v usa los dientes de arriba sobre el labio de abajo. La b usa los dos labios.','En inglés puedes empezar con s + consonante, sin una “e” antes. Di school, no “eschool”.','Sh es suave y larga. Ch es corta y explosiva. J suena como “dy”. Y suena como una “i” rápida.'],
+ zh:['舌尖放在上下牙之间轻轻吹气。不是 s，也不是 f。','发 r 时舌头不碰上颚，嘴唇微圆；发 l 时舌尖碰上牙后面。','发 v 时上牙轻咬下唇；发 w 时嘴唇圆起来，牙齿不碰嘴唇。','词尾的 d、g、k、t 要轻轻发出来，不要省略。'],
+ vi:['Đặt đầu lưỡi giữa hai hàm răng và thổi nhẹ. Không phải “t” hay “s”.','Hãy phát âm cả âm cuối như t, d, s. Đừng bỏ âm cuối.','S là âm xì nhẹ, môi bình thường. Sh môi tròn hơn và lưỡi lùi lại.','Với r, lưỡi không chạm vòm miệng. Với l, đầu lưỡi chạm sau răng trên.']};
+var TIPS345={
+ 3:{es:'Escucha el final de cada palabra. No lo comas.',zh:'注意听每个词的结尾，不要省略。',vi:'Hãy nghe kỹ phần cuối của từ và đừng bỏ qua nó.'},
+ 4:{es:'Di cada palabra despacio y luego más rápido.',zh:'先慢慢说，再说快一点。',vi:'Nói chậm trước, rồi nói nhanh hơn.'},
+ 5:{es:'Di la oración completa sin pausas largas. El ritmo importa.',zh:'把整句话连起来说，中间不要长时间停顿。节奏很重要。',vi:'Nói cả câu liền mạch, đừng dừng lâu. Nhịp điệu rất quan trọng.'}};
+PU.en={secL:function(n){return 'Section '+n},listen:'Listen',rec:'Record my voice',tip:'Tip',next:'Next',start:'Start',again:'Try again',close:'Close',
+ good:'Good job! On to the next one.',retry:'',heard:'I heard:',recording:'Recording…',mine:'My voice',
+ mic:'When you tap Record, your browser will ask permission to use the microphone.',
+ how:'Listen to the American English model. Tap Record and say the word. Repeat until it sounds right.',
+ blocked:'The microphone is not available in this preview. On the real site, the browser asks for permission. This is an example of how it will work.',
+ noSR:'',done:'You finished this section.',nextSec:'Next section',toUnit:'Back to the unit'};
+PU.en.watch='Watch first';PU.es.watch='Mira primero';PU.zh.watch='先看视频';PU.vi.watch='Xem trước';
+TIPS1[0].en='Ship is short and relaxed. Sheep is long, with your lips pulled wide, like a smile.';
+TIPS1[1].en='Pool is long with round lips. Pull is short and more relaxed.';
+TIPS1[2].en='Cat has a wide open mouth. Cut is short and soft, like a quick "uh".';
+TIPS1[3].en='Hot opens the mouth wide. Boat ends with a soft "oo": o-oo.';
+TIPS2.en=['Put the tip of your tongue between your teeth and blow gently. It is not "t" or "s".','For r, the tongue does not touch the roof of your mouth. For l, the tip of your tongue touches behind your top teeth.','For v, your top teeth touch your bottom lip. For b, both lips close.','Say the last sound of the word softly. Do not leave it out.'];
+PRON[2].en=[TH,{t:'r · l',w:W('right|raɪt,light|laɪt,road|roʊd,load|loʊd')},{t:'v · b',w:W('very|ˈvɛri,berry|ˈbɛri,vote|voʊt,boat|boʊt')},{t:'final sounds',w:W('bed|bɛd,bag|bæɡ,work|wɝːk,nice|naɪs')}];
+TIPS345[3].en='Listen for the end of every word. Do not drop it.';
+TIPS345[4].en='Say each word slowly, then a little faster.';
+TIPS345[5].en='Say the whole sentence without long pauses. Rhythm matters.';
+function secsFor(n,lid){return n===2?PRON[2][lid]:PRON[n]}
+function tipFor(n,i,lid){return n===1?TIPS1[i][lid]:n===2?TIPS2[lid][i]:TIPS345[n][lid]}
+
+function unitBEP(head,u,lid,n){
+  var L=langOf(lid),U=UI[lid],T=PU[lid],secs=secsFor(n,lid),vids=(BEPV[lid][n]||'').split(';;');
+  app.innerHTML='<div lang="'+L.lang+'">'+head+'<div class="about"><h2>'+U.aboutU+'</h2><p>'+u[1]+'</p></div>'+
+   '<div class="panel" style="margin-top:16px;max-width:860px"><h2>'+T.watch+'</h2><div class="vids">'+vids.map(function(x){var p=x.split('|');
+     return '<div class="vid"><a class="shot" href="https://www.youtube.com/watch?v='+p[0]+'" target="_blank" rel="noopener">'+PLAY+'<em>YouTube ↗</em></a><div><h3>'+p[1]+'</h3></div></div>'}).join('')+'</div></div>'+
+   '<div class="note" style="margin-top:16px">'+T.how+' '+T.mic+'</div>'+
+   '<div class="units">'+secs.map(function(s,i){var k='bep-'+lid+'-'+n+'-'+(i+1);
+     var preview=s.w[0].s?s.w[0].w+' …':s.w.map(function(x){return x.w}).join(' · ');
+     return '<div class="unit-card"><div><div class="u">'+T.secL(i+1)+'</div><h3 lang="en">'+s.t+'</h3><p lang="en">'+preview+'</p></div>'+
+      '<div style="display:grid;gap:8px;justify-items:end">'+(P[k]?'<span class="tick">✓</span>':'')+'<button class="btn small" onclick="pronStart('+n+',\''+lid+'\','+i+')">'+T.start+'</button></div></div>'}).join('')+'</div>'+
+   '<p style="padding-bottom:50px"><a href="#c-bep-'+lid+'">‹ '+U.back+'</a></p></div>';
+}
+var PS=null;
+function pronStart(n,lid,i){PS={n:n,lid:lid,i:i,k:0,tries:0,sim:0,ok:false,busy:false};$('#quiz').hidden=false;drawPron()}
+function say(w,slow){try{var s=new SpeechSynthesisUtterance(w);s.lang='en-US';s.rate=slow?.8:.9;speechSynthesis.cancel();speechSynthesis.speak(s)}catch(e){}}
+function sayCur(){var it=curItem();say(it.w,it.s)}
+function curItem(){return secsFor(PS.n,PS.lid)[PS.i].w[PS.k]}
+function drawPron(){
+  var s=PS,T=PU[s.lid],L=langOf(s.lid),secs=secsFor(s.n,s.lid),sec=secs[s.i],items=sec.w,box=$('#quiz');
+  var dots='<div class="dots" aria-hidden="true">'+items.map(function(_,k){return '<i class="'+(k<s.k?'d':(k===s.k?'c':''))+'"></i>'}).join('')+'</div>';
+  var head='<div class="qhead"><h2><span lang="'+L.lang+'">'+T.secL(s.i+1)+'</span> · <span lang="en">'+sec.t+'</span></h2><button class="link" onclick="closeQuiz()" lang="'+L.lang+'">'+T.close+' ✕</button></div>';
+  if(s.k>=items.length){
+    var k='bep-'+s.lid+'-'+s.n+'-'+(s.i+1);P[k]=true;save();
+    box.innerHTML='<div class="qbox" role="dialog" aria-modal="true" lang="'+L.lang+'">'+head+dots+'<div class="done">'+T.done+'</div><div class="acts">'+
+      (s.i<secs.length-1?'<button class="btn" onclick="pronStart('+s.n+',\''+s.lid+'\','+(s.i+1)+')">'+T.nextSec+'</button>':'')+
+      '<button class="btn ghost" onclick="closeQuiz()">'+T.toUnit+'</button></div></div>';
+    return;
+  }
+  var it=items[s.k];
+  box.innerHTML='<div class="qbox" role="dialog" aria-modal="true" lang="'+L.lang+'">'+head+dots+
+   '<div class="pron"><div class="word'+(it.s?' sent':'')+'" lang="en">'+it.w+'</div>'+(it.i?'<div class="ipa">/'+it.i+'/</div>':'')+
+   '<div class="tipbox"><b>'+T.tip+':</b> '+tipFor(s.n,s.i,s.lid)+'</div>'+
+   '<div class="acts"><button class="btn small ghost" onclick="sayCur()">▶ '+T.listen+'</button><button class="btn small" id="recBtn" onclick="recordAttempt()">● '+T.rec+'</button></div>'+
+   '<div id="pOut" aria-live="polite" style="min-height:44px;width:100%"></div><div id="pNext"></div></div></div>';
+  s.tries=0;s.sim=0;s.ok=false;
+}
+function norm(x){return x.toLowerCase().replace(/[^a-z0-9' ]/g,' ').split(/\s+/).filter(Boolean)}
+function judge(target,heard){var t=norm(target),h=norm(heard);if(!h.length)return false;
+  var hit=t.filter(function(w){return h.indexOf(w)>-1}).length;return hit/t.length>=(t.length===1?1:.7)}
+function meterHTML(){var h='';for(var i=0;i<14;i++)h+='<i style="animation-delay:'+(Math.random()*.5).toFixed(2)+'s"></i>';return '<div class="meter">'+h+'</div>'}
+function showResult(good,heard,url,note){
+  var T=PU[PS.lid],out=$('#pOut'),nx=$('#pNext');if(!out)return;PS.tries++;
+  out.innerHTML=(note?'<div class="note" style="margin-bottom:8px">'+note+'</div>':'')+
+    (heard?'<p style="font-size:14px;color:var(--muted)">'+T.heard+' <span lang="en">“'+heard+'”</span></p>':'')+
+    (url?'<p style="font-size:14px;margin:6px 0">'+T.mine+':</p><audio controls src="'+url+'" style="max-width:100%"></audio>':'')+
+    (good===null?'':'<div class="fb '+(good?'ok':'no')+'" style="margin-top:8px">'+(good?T.good:T.retry)+'</div>');
+  if(good||good===null||PS.tries>=3){nx.innerHTML='<button class="btn" onclick="pronNext()" style="margin-top:8px">'+T.next+'</button>'}
+  $('#recBtn').disabled=false;PS.busy=false;
+}
+function pronNext(){PS.k++;drawPron()}
+function simulate(){
+  var T=PU[PS.lid],out=$('#pOut');out.innerHTML=meterHTML()+'<p style="font-size:14px;color:var(--muted)">'+T.recording+'</p>';
+  setTimeout(function(){PS.sim++;showResult(true,null,null,T.blocked)},1800);
+}
+function levelMeter(){var h='';for(var i=0;i<14;i++)h+='<i style="animation:none;height:4px"></i>';return '<div class="meter">'+h+'</div>'}
+function recordAttempt(){
+  if(!PS||PS.busy)return;PS.busy=true;$('#recBtn').disabled=true;
+  var T=PU[PS.lid],it=curItem(),ms=it.s?6000:3000;
+  var gum=(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)?navigator.mediaDevices.getUserMedia({audio:true}):Promise.reject();
+  gum.then(function(st){
+    var AC=window.AudioContext||window.webkitAudioContext,ctx=new AC(),an=ctx.createAnalyser();an.fftSize=256;
+    ctx.createMediaStreamSource(st).connect(an);
+    var data=new Uint8Array(an.frequencyBinCount),out=$('#pOut');
+    out.innerHTML=levelMeter()+'<p style="font-size:14px;color:var(--muted)">'+T.recording+'</p>';
+    var bars=out.querySelectorAll('.meter i'),t0=Date.now();
+    (function tick(){
+      if(Date.now()-t0>=ms){st.getTracks().forEach(function(t){t.stop()});try{ctx.close()}catch(e){}showResult(true);return}
+      an.getByteFrequencyData(data);
+      for(var b=0;b<bars.length;b++){var v=data[b*3]||0;bars[b].style.height=Math.max(4,Math.round(v/255*28))+'px'}
+      requestAnimationFrame(tick);
+    })();
+  }).catch(function(){simulate()});
+}
+
+/* ---------- progress toggles ---------- */
+function toggle(k){P[k]=!P[k];save();route(true)}
+function scrollToId(id){var e=document.getElementById(id);if(e)e.scrollIntoView({behavior:'smooth',block:'start'})}
+
+/* ---------- quiz ---------- */
+var QS=null;
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+var QU={
+ en:{qn:'Question',check:'Check',next:'Next',result:'See result',right:'Correct!',wrong:'Not yet.',close:'Close',cont:'Continue',again:'Try again',great:'Well done! You passed this practice.',almost:'Almost. You need {n} correct answers. Watch the video again and try again.',of:'of'},
+ es:{qn:'Pregunta',check:'Comprobar',next:'Siguiente',result:'Ver resultado',right:'¡Correcto!',wrong:'Todavía no.',close:'Cerrar',cont:'Continuar',again:'Intentar otra vez',great:'¡Muy bien! Pasaste esta práctica.',almost:'Casi. Necesitas {n} respuestas correctas. Mira el video otra vez e inténtalo de nuevo.',of:'de'}};
+function startQuiz(ukey,which){
+  var p=ukey.split('-'),d=getUnit(p[0],p[1],parseInt(p[2],10)),src,title,pk;
+  if(which==='unit'){src=d.uq;title=(LB[p[1]]||LB.en).unitQuiz;pk=ukey+':uq'}
+  else{var w=which.split('-'),v=d.lessons[w[0]].v[w[1]];src=v.q;title=v.t;pk=ukey+':q'+w[0]+w[1]}
+  var items=src.map(function(q){
+    var idx=shuffle(q.o.map(function(_,k){return k}));
+    return {q:q.q,o:idx.map(function(k){return q.o[k]}),a:idx.indexOf(q.a),why:q.why};});
+  QS={items:items,i:0,score:0,sel:null,checked:false,res:[],title:title,pk:pk,ukey:ukey,which:which,lid:p[1]};
+  $('#quiz').hidden=false;drawQuiz();
+}
+function closeQuiz(){var q=$('#quiz');if(!q.hidden){q.hidden=true;QS=null;PS=null;route(true)}}
+function drawQuiz(){
+  var s=QS,box=$('#quiz'),n=s.items.length,T=QU[s.lid]||QU.en,L=langOf(s.lid);
+  var dots='<div class="dots" aria-hidden="true">'+s.items.map(function(_,k){
+    return '<i class="'+(k<s.res.length?(s.res[k]?'d':'x'):(k===s.i?'c':''))+'"></i>'}).join('')+'</div>';
+  if(s.i>=n){
+    var need=Math.ceil(n*.75),pass=s.score>=need;
+    if(pass&&(!P[s.pk]||P[s.pk]<s.score)){P[s.pk]=s.score;save()}
+    box.innerHTML='<div class="qbox" role="dialog" aria-modal="true" lang="'+L.lang+'"><div class="qhead"><h2>'+s.title+'</h2></div>'+dots+
+     '<div><div class="score">'+s.score+' '+T.of+' '+n+'</div><p>'+(pass?T.great:T.almost.replace('{n}',need))+'</p></div>'+
+     '<div class="acts"><button class="btn" onclick="closeQuiz()">'+T.cont+'</button><button class="btn ghost" onclick="startQuiz(\''+s.ukey+'\',\''+s.which+'\')">'+T.again+'</button></div></div>';
+    return;
+  }
+  var q=s.items[s.i];
+  box.innerHTML='<div class="qbox" role="dialog" aria-modal="true" lang="'+L.lang+'" aria-label="'+s.title+'"><div class="qhead"><h2>'+s.title+'</h2><button class="link" onclick="closeQuiz()" aria-label="'+T.close+'">'+T.close+' ✕</button></div>'+dots+
+   '<p style="color:var(--muted);font-size:14px">'+T.qn+' '+(s.i+1)+' '+T.of+' '+n+'</p><div class="qtext">'+q.q+'</div>'+
+   '<div class="opts">'+q.o.map(function(o,k){
+     var c='opt';
+     if(s.checked){if(k===q.a)c+=' ok';else if(k===s.sel)c+=' no'}else if(k===s.sel)c+=' sel';
+     return '<button class="'+c+'" onclick="pick('+k+')"'+(s.checked?' disabled':'')+'>'+o+'</button>'}).join('')+'</div>'+
+   (s.checked?'<div class="fb '+(s.sel===q.a?'ok':'no')+'"><b>'+(s.sel===q.a?T.right:T.wrong)+'</b> '+q.why+'</div>':'')+
+   '<div class="acts">'+(s.checked?'<button class="btn" onclick="nextQ()">'+(s.i===n-1?T.result:T.next)+'</button>':'<button class="btn" onclick="checkQ()"'+(s.sel===null?' disabled':'')+'>'+T.check+'</button>')+'</div></div>';
+}
+function pick(k){if(QS&&!QS.checked){QS.sel=k;drawQuiz()}}
+function checkQ(){var s=QS;if(s.sel===null)return;s.checked=true;var ok=s.sel===s.items[s.i].a;s.res.push(ok);if(ok)s.score++;drawQuiz()}
+function nextQ(){QS.i++;QS.sel=null;QS.checked=false;drawQuiz()}
+
+/* ---------- router ---------- */
+function route(keep){
+  var h=location.hash.replace('#','')||'home',p=h.split('-');
+  var y=window.scrollY;
+  if(p[0]==='c'&&COURSES[p[1]]&&COURSES[p[1]][p[2]])course(p[1],p[2]);
+  else if(p[0]==='u'&&COURSES[p[1]]&&COURSES[p[1]][p[2]])unit(p[1],p[2],parseInt(p[3],10));
+  else if(h==='donate')app.innerHTML='<div class="page-h" style="padding-block:40px"><h1>Donate</h1><p>This page is on hold until the donation plan and nonprofit status are decided.</p><p><a href="#home">‹ Back home</a></p></div>';
+  else home();
+  toggleMega(false);
+  window.scrollTo(0,keep===true?y:0);
+}
+window.addEventListener('hashchange',function(){route()});
+route();
+</script>
